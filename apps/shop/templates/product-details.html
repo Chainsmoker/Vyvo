@@ -1,0 +1,367 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="breadcrumb border-bottom p-0 d-block section-bg position-relative z-index-1">
+
+    <div class="breadcrumb-two">
+        <img src="{% static 'assets/images/gradients/breadcrumb-gradient-bg.png' %}" alt="" class="bg--gradient">
+        <div class="container container-two">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-two-content">
+
+                        <ul class="breadcrumb-list flx-align gap-2 mb-2">
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <a href="{% url 'pages:index' %}" class="breadcrumb-list__link text-body hover-text-main">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <a href="{% url 'shop:products' %}"
+                                    class="breadcrumb-list__link text-body hover-text-main">Productos</a>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <span class="breadcrumb-list__text">{{ product.category.name }}</span>
+                            </li>
+                        </ul>
+
+                        <h3 class="breadcrumb-two-content__title mb-3 text-capitalize">{{ product.name }}</h3>
+
+                        <div class="breadcrumb-content flx-align gap-3">
+                            <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
+                                <span class="text">By <a href="#" class="link text-main fw-600">{{ product.creator }}</a> </span>
+                            </div>
+                            <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
+                                <span class="icon">
+                                    <img src="{% static 'assets/images/icons/cart-icon.svg' %}" alt="" class="white-version">
+                                    <img src="{% static 'assets/images/icons/cart-white.svg' %}" alt="" class="dark-version w-20">
+                                </span>
+                                <span class="text">158 Ventas</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container container-two">
+        <div class="breadcrumb-tab flx-wrap align-items-start gap-lg-4 gap-2">
+            <ul class="nav tab-bordered nav-pills" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-product-details-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-product-details" type="button" role="tab"
+                        aria-controls="pills-product-details" aria-selected="true">Detalles</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-rating-tab" data-bs-toggle="pill" data-bs-target="#pills-rating"
+                        type="button" role="tab" aria-controls="pills-rating" aria-selected="false">
+                        <span class="d-flex align-items-center gap-1">
+                            <span class="star-rating">
+                                {{ product.fill_stars|safe }}
+                            </span>
+                            <span class="star-rating__text text-body"> {{ product.get_average_rating }}</span>
+                            <span class="star-rating__text text-body"> ({{ product.reviews.count }})</span>
+                        </span>
+                    </button>
+                </li>
+            </ul>
+            <div class="social-share">
+                <button type="button" class="social-share__button">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+                <div class="social-share__icons">
+                    <ul class="social-icon-list colorful-style">
+                        <li class="social-icon-list__item">
+                            <a href="https://www.facebook.com" class="social-icon-list__link text-body flex-center"><i
+                                    class="fab fa-facebook-f"></i></a>
+                        </li>
+                        <li class="social-icon-list__item">
+                            <a href="https://www.twitter.com" class="social-icon-list__link text-body flex-center"> <i
+                                    class="fab fa-pinterest-p"></i></a>
+                        </li>
+                        <li class="social-icon-list__item">
+                            <a href="https://www.google.com" class="social-icon-list__link text-body flex-center"> <i
+                                    class="fab fa-twitter"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<div class="product-details mt-32 padding-b-120">
+    <div class="container container-two">
+        <div class="row gy-4">
+            <div class="col-lg-8">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-product-details" role="tabpanel"
+                        aria-labelledby="pills-product-details-tab" tabindex="0">
+                        <div class="product-details">
+                            <div class="product-details__thumb">
+                                <img src="{{ product.get_featured_image }}" alt="">
+                            </div>
+                            <div class="product-details__buttons flx-align justify-content-center gap-3">
+                                <a href="#"
+                                    class="btn btn-main d-inline-flex align-items-center gap-2 pill px-sm-5 justify-content-center">
+                                    <i class="fas fa-cart-plus"></i>
+                                    Comprar
+                                </a>
+
+                                <a href="javascript:void(0);" class="screenshot-btn btn btn-white pill px-sm-5"
+                                    data-images='[{% for image in product.images.all %}"{{ image.image.url }}", {% endfor %}]'><i class="fas fa-images"></i> Capturas</a>
+
+
+                            </div>
+
+                            <p class="product-details__desc">{{ product.description }}</p>
+
+                            <div class="more-item">
+                                <div class="flx-between mb-4">
+                                    <h5 class="more-item__title">Más Productos</h5>
+                                    <a href="profile.html"
+                                        class="text-heading fw-500 hover-text-decoration-underline">Ver Perfil</a>
+                                </div>
+                                <div class="more-item__content flx-align">
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item1.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item2.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item3.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item4.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item5.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item6.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item7.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item8.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="more-item__item">
+                                        <a href="all-product.html" class="link w-100 h-100 d-block">
+                                            <img src="{% static 'assets/images/thumbs/more-item9.png' %}" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab"
+                        tabindex="0">
+                        <div class="flx-align justify-content-end">
+                            <button type="button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#reviewsmodal"
+                            class="btn btn-main d-flex justify-content-center align-items-center gap-2 pill px-sm-5 mt-32 mb-32">
+                            <i class="fas fa-plus"></i>
+                            Agregar review
+                        </button>
+                        </div>
+                        <div class="product-review-wrapper">
+                            {% for review in product.reviews.all %}
+                            <div class="product-review">
+                                <div class="product-review__top flx-between">
+                                    <div class="product-review__rating flx-align">
+                                        <div class="d-flex align-items-center gap-1">
+                                            <ul class="star-rating">
+                                                {{ review.fill_stars|safe }}
+                                            </ul>
+                                            <span class="star-rating__text text-body"> {{ review.rating }}</span>
+                                        </div>
+                                        <span class="product-review__reason"><span
+                                                class="product-review__subject">Customer Support</span> </span>
+                                    </div>
+                                    <div class="product-review__date">
+                                        de <a href="#" class="product-review__user text--base">{{ review.user }} </a> {{ review.created_at|date:"M, Y" }}
+                                    </div>
+                                </div>
+                                <div class="product-review__body">
+                                    <p class="product-review__desc">{{ review.comment }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="reviewsmodal" tabindex="-1" aria-labelledby="reviewsmodal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                           <div class="modal-content">
+                              <div>
+                                 <button type="button" class="bid__modal-close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-circle-xmark"></i></button>
+                              </div>
+                              <div class="review-content">
+                                <h3 class="title">Escribe una reseña</h3>
+                                {% if user.is_authenticated %}
+                                <p>Deja una reseña para este producto</p>
+                                <form id="review-form" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                    <ul class="star-rating mt-3">
+                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
+                                    </ul>
+                                    <p id="rating-error" class="text-danger text-center"></p>
+                                    <input type="number" name="rating" id="rating" hidden>
+                                    <div class="w-100">
+                                        <textarea name="comment" placeholder="Escribe tu reseña" cols="10" rows="5"></textarea>
+                                        <p id="review-error" class="text-danger"></p>
+                                    </div>
+                                    <div class="bid__modal-btn">
+                                        <button id="review-btn" class="btn btn-main d-flex justify-content-center align-items-center gap-2 pill px-sm-5 mt-3">Enviar</button>
+                                    </div>
+                                </form>
+                                 {% else %}
+                                 <p>Debes iniciar sesión para dejar una reseña</p>
+                                 {% endif %}
+                              </div>
+                           </div>
+                        </div>
+                    </div>
+
+                    <style>
+                        .modal-content {
+                            background-color: #1A1D37;
+                            padding: 20px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            text-align: center;
+                        }
+                        .modal-content textarea {
+                            background-color: #1A1D37;
+                            color: #fff;
+                            width: 100%;
+                            border: .5px solid #fff;
+                            outline: none;
+                            resize: none;
+                            padding: 10px;
+                            border-radius: 10px
+                        }
+                    </style>
+
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="product-sidebar section-bg">
+                    <div class="product-sidebar__top position-relative flx-between gap-1">
+                        <button type="button" class="font-heading font-18 text-white" style="font-weight: bold;">Precio</button>
+                        <h6 class="product-sidebar__title">${{ product.price }}</h6>
+                    </div>
+
+                    <ul class="sidebar-list">
+                        <li class="sidebar-list__item flx-align gap-2 font-14 fw-300 mb-2">
+                            <span class="icon"><img src="{% static 'assets/images/icons/check-cirlce.svg' %}" alt=""></span>
+                            <span class="text">Calidad verificada</span>
+                        </li>
+                        <li class="sidebar-list__item flx-align gap-2 font-14 fw-300 mb-2">
+                            <span class="icon"><img src="{% static 'assets/images/icons/check-cirlce.svg' %}" alt=""></span>
+                            <span class="text">Uso para un solo proyecto</span>
+                        </li>
+                        <li class="sidebar-list__item flx-align gap-2 font-14 fw-300">
+                            <span class="icon"><img src="{% static 'assets/images/icons/check-cirlce.svg' %}" alt=""></span>
+                            <span class="text">Reembolsable</span>
+                        </li>
+                    </ul>
+
+                    <button type="button"
+                        class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
+                        <img src="{% static 'assets/images/icons/add-to-cart.svg' %}" alt="">
+                        Agregar al carrito
+                    </button>
+
+                    <div class="author-details">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="author-details__thumb flex-shrink-0">
+                                <img style="border-radius: 50%; height: 60px; width: 60px;" src="{{ product.creator.get_profile_image }}" alt="">
+                            </div>
+                            <div class="author-details__content">
+                                <h6 class="author-details__name font-18 mb-2"><a href="{% url 'profile' product.creator.username %}"
+                                        class="link hover-text-main text-capitalize">{{ product.creator }}</a></h6>
+
+                                <span class="d-flex align-items-center gap-1">
+                                    <ul class="star-rating">
+                                        {{ product.creator.fill_stars|safe }}
+                                    </ul>
+                                    <span class="star-rating__text text-body"> ({{ product.creator.get_average_rating }}) </span>
+                                </span>
+                            </div>
+                        </div>
+                        <a href="{% url 'profile' product.creator.username %}" class="btn btn-outline-light w-100 pill mt-32">Ver perfil</a>
+                    </div>
+
+                    <ul class="meta-attribute">
+                        <li class="meta-attribute__item">
+                            <span class="name">Ultima Actualización</span>
+                            <span class="details text-capitalize">{{ product.updated_at|date:"F j, Y" }}</span>
+                        </li>
+                        <li class="meta-attribute__item">
+                            <span class="name">Publicado</span>
+                            <span class="details text-capitalize">{{ product.created_at|date:"F j, Y" }}</span>
+                        </li>
+                        <li class="meta-attribute__item">
+                            <span class="name">Categoría</span>
+                            <span class="details">{{ product.category.name }}</span>
+                        </li>
+                        <li class="meta-attribute__item">
+                            <span class="name">Tamaño</span>
+                            <span class="details">{{ product.file.size|filesizeformat }}</span>
+                        </li>
+                        <li class="meta-attribute__item">
+                            <span class="name">Tags</span>
+                            <span class="details">
+                                <a href="#" class="hover-text-decoration-underline">theme,</a>
+                                <a href="#" class="hover-text-decoration-underline">web design,</a>
+                                <a href="#" class="hover-text-decoration-underline">minimal design,</a>
+                                <a href="#" class="hover-text-decoration-underline">trendy,</a>
+                                <a href="#" class="hover-text-decoration-underline">responsive,</a>
+                                <a href="#" class="hover-text-decoration-underline">wordpress,</a>
+                                <a href="#" class="hover-text-decoration-underline">saas,</a>
+                                <a href="#" class="hover-text-decoration-underline">dashboard,</a>
+                            </span>
+                        </li>
+                    </ul>
+                    <!-- Meta Attribute List End -->
+                </div>
+                <!-- ======================= Product Sidebar End ========================= -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ======================= Product Details Section End ==================== -->
+{% endblock %}

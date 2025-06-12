@@ -1,0 +1,546 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="breadcrumb-three section-bg position-relative z-index-1 overflow-hidden">
+
+    <img src="{% static 'assets/images/gradients/breadcrumb-gradient-bg.png' %}" alt="" class="bg--gradient">
+
+    <img src="{% static 'assets/images/shapes/element-moon3.png' %}" alt="" class="element one">
+    <img src="{% static 'assets/images/shapes/element-moon1.png' %}" alt="" class="element three">
+
+    <div class="container container-two">
+        <div class="breadcrumb-three-content border-bottom border-color">
+            <div class="breadcrumb-three-content__inner">
+                <div class="breadcrumb-three-content__left">
+                    <div class="flx-between align-items-end gap-3">
+                        <div class="author-profile d-flex gap-2 flex-column">
+                            <div class="author-profile__thumb flex-shrink-0">
+                                <img src="{{ user.get_profile_image }}" class="profile-image" alt="">
+                            </div>
+
+                            <div class="d-flex align-items-end flex-wrap gap-4">
+                                <div class="author-profile__info">
+                                    <h5 class="author-profile__name mb-2">{{ user.username }}</h5>
+                                    <span class="author-profile__membership font-14">Miembro desde {{ user.date_joined|date:"F Y" }}</span>
+                                </div>
+                                <div class="flx-align gap-3">
+                                    {% if is_owner %}
+                                    <a href="profile.html" class="btn btn-main pill px-4 fw-300"><i class="fas fa-plus"></i> Agregar </a>
+                                    {% endif %}
+                                    {% if request.user != user %}
+                                    <button type="button" class="btn btn-outline-black pill px-4">
+                                        {% if request.user in user.follows.all %}
+                                        Dejar de seguir
+                                        {% else %}
+                                        Seguir
+                                        {% endif %}
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="breadcrumb-three-content__right flex-shrink-0  d-flex align-items-center gap-4 gap-lg-5">
+                            <div class="author-rating">
+                                <span class="author-rating__text text-heading fw-500 mb-2">Calificación</span>
+                                <div class="d-flex align-items-center gap-1">
+                                    <ul class="star-rating">
+                                        {{ user.fill_stars|safe }}
+                                    </ul>
+                                    <span class="star-rating__text text-body font-14"> ({% if user.get_average_rating %}{{ user.get_average_rating }}{% else %}0{% endif %})</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <ul class="nav tab-bordered nav-pills mt-4" id="pills-tabbs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                        aria-selected="true">Perfil</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-portfolio-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-portfolio" type="button" role="tab" aria-controls="pills-portfolio"
+                        aria-selected="false">Portafolio </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-followerss-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-followerss" type="button" role="tab" aria-controls="pills-followerss"
+                        aria-selected="false">Seguidores <span class="notification">{{ user.followed_by.count }}</span> </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-Followingg-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-Followingg" type="button" role="tab" aria-controls="pills-Followingg"
+                        aria-selected="false">Siguiendo <span class="notification">{{ user.follows.count }}</span> </button>
+                </li>
+                {% if is_owner %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-Settingss-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-Settingss" type="button" role="tab" aria-controls="pills-Settingss"
+                        aria-selected="false">Configuración </button>
+                </li>
+                {% endif %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-review-tab" data-bs-toggle="pill" data-bs-target="#pills-review"
+                        type="button" role="tab" aria-controls="pills-review" aria-selected="false">Reseñas </button>
+                </li>
+                {% if is_owner %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-download-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-download" type="button" role="tab" aria-controls="pills-download"
+                        aria-selected="false">Descargas </button>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="profile pt-5 padding-b-120">
+    <div class="container container-two">
+        <div class="tab-content" id="pills-tabb">
+
+            <div class="tab-pane fade show active" id="pills-profile" role="tabpanel"
+                aria-labelledby="pills-profile-tab" tabindex="0">
+                <div class="profile-wrapper">
+                    <div class="profile-content">
+                        <div class="profile-content__inner">
+                            {% if user.banner_picture %}
+                            <div class="profile-content__thumb mb-lg-5 mb-4">
+                                <img style="width: 100%; height: 250px; object-fit: cover;border-radius: 10px;" src="{{ user.get_cover_image }}" alt="">
+                            </div>
+                            {% endif %}
+                            <div class="profile-content__item-wrapper">
+                                <div class="profile-content__item">
+                                    <h5 class="profile-content__title mb-2">Sobre mí</h5>
+                                    <p class="profile-content__desc">
+                                        {% if user.bio %}
+                                        {{ user.bio }}
+                                        {% else %}
+                                        No hay información disponible.
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="follower-item">
+                                <div class="flx-between mb-4">
+                                    <h5 class="follower-item__title mb-0">{{ user.follows.count }} Seguidores</h5>
+                                </div>
+                                <div class="follower-item__content flx-align">
+                                    {% for follower in user.followed_by.all %}
+                                    <div class="follower-item__item">
+                                        <a href="{% url 'profile' follower.username %}" class="link w-100 h-100 d-block">
+                                            <img src="{{ follower.get_profile_image }}" alt="">
+                                        </a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% include 'includes/profile-sidebar.html' %}
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-portfolio" role="tabpanel" aria-labelledby="pills-portfolio-tab"
+                tabindex="0">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-product" role="tabpanel"
+                        aria-labelledby="pills-product-tab" tabindex="0">
+                        <div class="row gy-4 list-grid-wrapper">
+                            {% for product in user.products.all %}
+                            <div class="col-xl-3 col-lg-4 col-sm-6">
+                                <div class="product-item section-bg">
+                                    <div class="product-item__thumb d-flex">
+                                        <a href="{% url 'shop:product' product.slug %}" class="link w-100">
+                                            <img src="{{ product.get_featured_image }}" alt=""
+                                                class="cover-img">
+                                        </a>
+                                        <button type="button" class="product-item__wishlist"><i
+                                                class="fas fa-heart"></i></button>
+                                    </div>
+                                    <div class="product-item__content">
+                                        <h6 class="product-item__title">
+                                            <a href="{% url 'shop:product' product.slug %}" class="link">{{ product.name }}</a>
+                                        </h6>
+                                        <div class="product-item__info flx-between gap-2">
+                                            <span class="product-item__author">
+                                                port
+                                                <a href="{% url 'profile' product.creator.username %}" class="link hover-text-decoration-underline">
+                                                    {{ product.creator.username }}</a>
+                                            </span>
+                                            <div class="flx-align gap-2">
+                                                <h6 class="product-item__price mb-0">${{ product.price }}</h6>
+                                                <span
+                                                    class="product-item__prevPrice text-decoration-line-through">$259</span>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__bottom flx-between gap-2">
+                                            <div>
+                                                <span class="product-item__sales font-14 mb-2">1200 Sales</span>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <ul class="star-rating">
+                                                        {{ product.fill_stars|safe }}
+                                                    </ul>
+                                                    <span class="star-rating__text text-heading fw-500 font-14">
+                                                        ({{ product.get_favorites_count }})</span>
+                                                </div>
+                                            </div>
+                                            <a href="{% url 'shop:product' product.slug %}"
+                                                class="btn btn-outline-light btn-sm pill">Ver más</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p>No hay productos agregados</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-followerss" role="tabpanel" aria-labelledby="pills-followerss-tab"
+                tabindex="0">
+                <div class="profile-wrapper">
+                    <div class="profile-content">
+                        <div class="follow-wrapper">
+                            {% for follower in user.followed_by.all %}
+                            {% include 'includes/follower-item.html' %}
+                            {% empty %}
+                            <p>No hay seguidores</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% include 'includes/profile-sidebar.html' %}
+
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="pills-Followingg" role="tabpanel" aria-labelledby="pills-Followingg-tab"
+                tabindex="0">
+                <div class="profile-wrapper">
+                    <div class="profile-content">
+                        <div class="follow-wrapper">
+                            {% for follower in user.follows.all %}
+                            {% include 'includes/follower-item.html' %}
+                            {% empty %}
+                            <p>Este usuario no sigue a nadie</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {% include 'includes/profile-sidebar.html' %}
+
+                </div>
+
+            </div>
+
+            {% if is_owner %}
+            <div class="tab-pane fade" id="pills-Settingss" role="tabpanel" aria-labelledby="pills-Settingss-tab"
+                tabindex="0">
+
+                <div class="row gy-4">
+                    <div class="col-lg-4 pe-xl-5">
+                        <div class="setting-sidebar ">
+                            <h6 class="setting-sidebar__title">Información Personal</h6>
+                            <ul class="setting-sidebar-list">
+                                <li class="setting-sidebar-list__item"><a href="#profile"
+                                        class="setting-sidebar-list__link">Perfil</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-8">
+                        <form method="post" id="edit-profile-form" action="/accounts/profile/@{{ user.username }}">
+                            {% csrf_token %}
+                            <div class="card common-card border border-gray-five overflow-hidden mb-24" id="profile">
+                                <div class="card-header">
+                                    <h6 class="title">Perfil</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-sm-12 col-xs-12">
+                                            <label for="ProfileHeading" class="form-label">Nombre de usuario</label>
+                                            <input type="text"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="username" value="{{ user.username }}">
+                                            <span class="text-danger" id="username-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="ProfileHeading" class="form-label">Correo electrónico</label>
+                                            <input type="text"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="email" value="{{ user.email }}">
+                                            <span class="text-danger" id="email-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="ProfileHeading" class="form-label">Teléfono</label>
+                                            <input type="text"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="phone" value="{{ user.phone|default_if_none:'' }}">
+                                            <span class="text-danger" id="phone-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="ProfileHeading" class="form-label">Nombre</label>
+                                            <input type="text"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="first_name" value="{{ user.first_name|default_if_none:'' }}">
+                                            <span class="text-danger" id="first_name-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="ProfileHeading" class="form-label">Apellido</label>
+                                            <input type="text"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="last_name" value="{{ user.last_name|default_if_none:'' }}">
+                                            <span class="text-danger" id="last_name-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="fileUpload" class="form-label">Foto de perfil</label>
+                                            <input type="file"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="profile_picture">
+                                            <span class="text-danger" id="profile_picture-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="fileUploadTwo" class="form-label">Banner</label>
+                                            <input type="file"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="banner_picture">
+                                            <span class="text-danger" id="banner_picture-error"></span>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <label for="aboutProfile" class="form-label">Biografia</label>
+                                            <textarea class="common-input common-input--md border--color-dark bg--white"
+                                                name="bio">{{ user.bio|default_if_none:'' }}</textarea>
+                                            <span class="text-danger" id="bio-error"></span>
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="facebookUrl" class="form-label">Facebook</label>
+                                            <div class="position-relative">
+                                                <input type="url"
+                                                    class="common-input common-input--md common-input--withLeftIcon"
+                                                    name="facebook" placeholder="Facebook" value="{{ user.facebook|default_if_none:'' }}">
+                                                <span class="input-icon input-icon--left text-main"><i
+                                                        class="fab fa-facebook-f"></i> </span>
+                                            </div>
+                                            <span class="text-danger" id="facebook-error"></span>
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="twitterUrl" class="form-label">Twitter</label>
+                                            <div class="position-relative">
+                                                <input type="url"
+                                                    class="common-input common-input--md common-input--withLeftIcon"
+                                                    name="twitter" placeholder="Twitter" value="{{ user.twitter|default_if_none:'' }}">
+                                                <span class="input-icon input-icon--left text-main"><i
+                                                        class="fab fa-twitter"></i> </span>
+                                            </div>
+                                            <span class="text-danger" id="twitter-error"></span>
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="instagramUrl" class="form-label">Instagram</label>
+                                            <div class="position-relative">
+                                                <input type="url"
+                                                    class="common-input common-input--md common-input--withLeftIcon"
+                                                    name="instagram" placeholder="Instagram" value="{{ user.instagram|default_if_none:'' }}">
+                                                <span class="input-icon input-icon--left text-main"><i
+                                                        class="fab fa-instagram"></i> </span>
+                                            </div>
+                                            <span class="text-danger" id="instagram-error"></span>
+                                        </div>
+
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="pinterestUrl" class="form-label">Pinterest</label>
+                                            <div class="position-relative">
+                                                <input type="url"
+                                                    class="common-input common-input--md common-input--withLeftIcon"
+                                                    name="pinterest" placeholder="Pinterest" value="{{ user.pinterest|default_if_none:'' }}">
+                                                <span class="input-icon input-icon--left text-main"><i
+                                                        class="fab fa-pinterest"></i> </span>
+                                            </div>
+                                            <span class="text-danger" id="pinterest-error"></span>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <span class="text-center w-100" id="global-message"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn w-100 btn-main btn-md" id="edit-profile-button">Guardar Cambios</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="tab-pane fade" id="pills-review" role="tabpanel" aria-labelledby="pills-review-tab" tabindex="0">
+                <div class="card common-card border border-gray-five">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table text-body mt--24">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Usuario</th>
+                                        <th>Calificación</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for review in reviews %}
+                                    <tr>
+                                        <td>
+                                            <div class="review-product d-flex align-items-center gap-2">
+                                                <div class="review-product__thumb flex-shrink-0">
+                                                    <img style="height: 100%;" src="{{ review.product.get_featured_image }}" alt="">
+                                                </div>
+                                                <div class="review-product__content">
+                                                    <h6 class="review-product__name font-15 fw-500 mb-0">
+                                                        <a href="{% url 'shop:product' review.product.slug %}" class="link">{{ review.product.name }} </a>
+                                                    </h6>
+                                                    <span class="review-product__date font-12">{{ review.created_at|date:"F Y" }}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="product-user font-12">
+                                                <strong class="fw-600 text-heading d-block">{{ review.user.username }}</strong>
+                                                <span class="text-capitalize">{{ review.user.get_full_name }}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <ul class="star-rating justify-content-center">
+                                                {{ review.product.fill_stars|safe }}
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'shop:product' review.product.slug %}" class="btn btn-main"><i class="fa fa-eye"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">No hay reseñas</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="flx-between gap-2">
+                                <div class="paginate-content flx-align flex-nowrap gap-3">
+                                    <select class="select common-input py-2 px-3 w-auto">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <span class="paginate-content__text fs-14">Showing 1 - 10 of 100</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+   
+            {% if is_owner %}
+            <div class="tab-pane fade" id="pills-download" role="tabpanel" aria-labelledby="pills-download-tab"
+                tabindex="0">
+                <div class="row gy-4">
+                    <div class="col-lg-12">
+                        <div class="download-wrapper ">
+                            <div class="download-item flx-between gap-3">
+                                <div class="download-item__content flx-align flex-nowrap gap-3 flex-grow-1">
+                                    <div class="download-item__thumb flex-shrink-0">
+                                        <img src="{% static 'assets/images/thumbs/rejected1.png' %}" alt="">
+                                    </div>
+                                    <div class="download-item__info">
+                                        <h6 class="download-item__title mb-1">
+                                            <a href="#" class="link">CityScape - Real Estate HTML Template</a>
+                                        </h6>
+                                        <a href="#"
+                                            class="download-item__text text-main mb-3 font-12 hover-text-decoration-underline">Tools
+                                            License</a>
+                                        <div class="common-check">
+                                            <input class="form-check-input" type="checkbox" name="checkbox" id="notifiedd">
+                                            <label class="form-check-label text-body fw-400 mb-0" for="notifiedd">Get
+                                                notified by email if this item is updated</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="download-item__right flex-shrink-0 d-inline-flex flex-column gap-2 align-items-center">
+                                    <button type="button" class="btn btn-main pill px-4">
+                                        Download <span class="icon-right icon ms-0"> <i class="las la-download"></i></span>
+                                    </button>
+                                    <div class="bg-white py-1 px-2 rounded d-inline-block">
+                                        <ul class="star-rating justify-content-center">
+                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
+                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
+                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
+                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
+                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ========================= Download Section End ====================== -->
+    
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</section>
+
+<script>
+    const form = document.getElementById('edit-profile-form');
+    const button = document.getElementById('edit-profile-button');
+    const globalElement = document.getElementById('global-message');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+        });
+        
+        const data = await response.json();
+        if (!data.success) {
+            const errors = data.errors;
+            Object.entries(errors).forEach(([key, value]) => {
+                const errorElement = document.getElementById(`${key}-error`);
+                if (errorElement) {
+                    errorElement.textContent = value;
+                } else {
+                    if (globalElement) {
+                        globalElement.textContent = value;
+                    }
+                }
+            });
+        }
+
+        window.location.reload();
+    });
+</script>
+{% endblock %}

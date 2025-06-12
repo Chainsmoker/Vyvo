@@ -1,0 +1,39 @@
+
+{% load static %}
+<div class="mobile-menu d-lg-none d-block">
+    <button type="button" class="close-button"> <i class="las la-times"></i> </button>
+    <div class="mobile-menu__inner">
+        <a href="index.html" class="mobile-menu__logo">
+            <img src="{% static 'assets/images/logo/logo.png' %}" alt="Logo" class="white-version">
+            <img src="{% static 'assets/images/logo/white-logo-two.png' %}" alt="Logo" class="dark-version">
+        </a>
+        <div class="mobile-menu__menu">
+
+            <ul class="nav-menu flx-align nav-menu--mobile">
+                <li class="nav-menu__item">
+                    <a href="{% url 'pages:index' %}" class="nav-menu__link">Inicio</a>
+                </li>
+                <li class="nav-menu__item">
+                    <a href="{% url 'shop:products' %}" class="nav-menu__link">Productos</a>
+                </li>
+                <li class="nav-menu__item">
+                    <a href="javascript:void(0)" class="nav-menu__link">Categorias</a>
+                </li>
+                <li class="nav-menu__item">
+                    <a href="javascript:void(0)" class="nav-menu__link">Blog</a>
+                </li>
+                <li class="nav-menu__item">
+                    <a href="{% url 'pages:contact' %}" class="nav-menu__link">Contacto</a>
+                </li>
+            </ul>
+            <div class="header-right__inner d-lg-none my-3 gap-1 d-flex flx-align">
+
+                <a href="register.html" class="btn btn-main pill">
+                    <span class="icon-left icon">
+                        <img src="{% static 'assets/images/icons/user.svg' %}" alt="">
+                    </span>Create Account
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

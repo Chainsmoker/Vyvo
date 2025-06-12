@@ -1,0 +1,86 @@
+{% load static %}
+<div class="profile-sidebar">
+    <div class="profile-sidebar__item">
+        <h5 class="mb-4">Productos destacados</h5>
+        <div class="featured-item d-flex align-items-center gap-4">
+            <div class="featured-item__thumb">
+                <a href="product-details.html" class="link"><img
+                        src="{% static 'assets/images/thumbs/featured-item-img.png' %}" alt=""></a>
+            </div>
+            <div class="featured-item__content">
+                <h6 class="featured-item__title mb-2"><a href="product-details.html"
+                        class="link">Personal portfolio one page template</a></h6>
+                <span class="featured-item__text mb-2 text-heading fw-500">250 Purchases</span>
+                <div class="d-flex align-items-center gap-1">
+                    <ul class="star-rating">
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                        <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
+                    </ul>
+                    <span class="star-rating__text text-body font-14"> 5.0 </span>
+                    <span class="star-rating__text text-body font-14"> (116)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-sidebar__author">
+            <div class="author-details p-0 border-0 mt-0">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="author-details__thumb flex-shrink-0">
+                        <img src="{{ user.get_profile_image }}" class="profile-image-size" alt="">
+                    </div>
+                    <div class="author-details__content">
+                        <h6 class="author-details__name font-18 mb-2">{{ user.username }}</h6>
+
+                        <span class="d-flex align-items-center gap-1">
+                            <ul class="star-rating">
+                                {{ user.fill_stars|safe }}
+                            </ul>
+                            <span class="star-rating__text text-body"> ({{ user.get_average_rating }}) </span>
+                        </span>
+                    </div>
+                </div>
+                <a href="profile.html" class="btn btn-outline-light w-100 pill mt-32 fw-600">Total
+                    {{ user.products.count }} Productos</a>
+            </div>
+        </div>
+
+    </div>
+    {% if user.facebook or user.twitter or user.pinterest or user.instagram %}
+    <div class="profile-sidebar__item">
+        <h5 class="profile-sidebar__title">Redes Sociales</h5>
+        <ul class="social-icon-list">
+            {% if user.facebook %}
+            <li class="social-icon-list__item">
+                <a href="{{ user.facebook }}"
+                    class="social-icon-list__link flx-center bg-white border-white text-heading font-18"><i
+                        class="fab fa-facebook-f"></i></a>
+            </li>
+            {% endif %}
+            {% if user.twitter %}
+            <li class="social-icon-list__item">
+                <a href="{{ user.twitter }}"
+                    class="social-icon-list__link flx-center bg-white border-white text-heading font-18">
+                    <i class="fab fa-twitter"></i></a>
+            </li>
+            {% endif %}
+            {% if user.pinterest %}
+            <li class="social-icon-list__item">
+                <a href="{{ user.pinterest }}"
+                    class="social-icon-list__link flx-center bg-white border-white text-heading font-18">
+                    <i class="fab fa-pinterest-p"></i></a>
+            </li>
+            {% endif %}
+            {% if user.instagram %}
+            <li class="social-icon-list__item">
+                <a href="{{ user.instagram }}"
+                    class="social-icon-list__link flx-center bg-white border-white text-heading font-18">
+                    <i class="fab fa-instagram"></i></a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    {% endif %}
+</div>

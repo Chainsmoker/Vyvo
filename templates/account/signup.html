@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load static %}
+{% load socialaccount %}
+
+{% block content %}
+<section class="account d-flex">
+    <img src="{% static 'assets/images/thumbs/account-img.png' %}" alt="" class="account__img">
+    <div class="account__left d-md-flex d-none flx-align section-bg position-relative z-index-1 overflow-hidden">
+        <img src="{% static 'assets/images/shapes/pattern-curve-seven.png' %}" alt=""
+            class="position-absolute end-0 top-0 z-index--1 h-100">
+        <div class="account-thumb">
+            <img src="{% static 'assets/images/thumbs/banner-img.png' %}" alt="">
+            <div class="statistics animation bg-main text-center">
+                <h5 class="statistics__amount text-white">50k</h5>
+                <span class="statistics__text text-white font-14">Customers</span>
+            </div>
+        </div>
+    </div>
+    <div class="account__right padding-t-120 flx-align">
+        <div class="account-content">
+            <a href="index.html" class="logo mb-64">
+                <img src="{% static 'assets/images/logo/logo.png' %}" alt="" class="white-version">
+                <img src="{% static 'assets/images/logo/white-logo-two.png' %}" alt="" class="dark-version">
+            </a>
+            <h4 class="account-content__title mb-48 text-capitalize">Crea una cuenta</h4>
+            <form method="post">
+                {% csrf_token %}
+                <div class="row gy-4">
+                    <div class="col-12">
+                        <label for="name" class="form-label mb-2 font-18 font-heading fw-600">Nombres</label>
+                        <div class="position-relative">
+                            <input type="text" name="first_name" class="common-input common-input--bg common-input--withIcon" id="name"
+                                placeholder="Tu nombre completo">
+                            <span class="input-icon"><img src="{% static 'assets/images/icons/user-icon.svg' %}" alt=""></span>
+                        </div>
+                        {% if form.first_name.errors %}
+                           <p class="text-danger">{{ form.first_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        <label for="name" class="form-label mb-2 font-18 font-heading fw-600">Apellidos</label>
+                        <div class="position-relative">
+                            <input type="text" name="last_name" class="common-input common-input--bg common-input--withIcon" id="last_name"
+                                placeholder="Tu apellido completo">
+                            <span class="input-icon"><img src="{% static 'assets/images/icons/user-icon.svg' %}" alt=""></span>
+                        </div>
+                        {% if form.last_name.errors %}
+                           <p class="text-danger">{{ form.last_name.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Nombre de usuario</label>
+                        <div class="position-relative">
+                            <input type="text" name="username" class="common-input common-input--bg common-input--withIcon" id="username"
+                                placeholder="CartusArt">
+                            <span class="input-icon"><img src="{% static 'assets/images/icons/envelope-icon.svg' %}" alt=""></span>
+                        </div>
+                        {% if form.username.errors %}
+                           <p class="text-danger">{{ form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        <label for="email" class="form-label mb-2 font-18 font-heading fw-600">Correo electrónico</label>
+                        <div class="position-relative">
+                            <input type="email" name="email" class="common-input common-input--bg common-input--withIcon" id="email"
+                                placeholder="usuario@certus.edu.pe">
+                            <span class="input-icon"><img src="{% static 'assets/images/icons/envelope-icon.svg' %}" alt=""></span>
+                        </div>
+                        {% if form.email.errors %}
+                           <p class="text-danger">{{ form.email.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <label for="your-password" class="form-label mb-2 font-18 font-heading fw-600">Contraseña</label>
+                        <div class="position-relative">
+                            <input type="password" name="password1" class="common-input common-input--bg common-input--withIcon"
+                                id="your-password" placeholder="6+ caracteres, 1 Mayúscula">
+                            <span class="input-icon toggle-password cursor-pointer" id="#your-password"><img
+                                    src="{% static 'assets/images/icons/lock-icon.svg' %}" alt=""></span>
+                        </div>
+                        {% if form.password1.errors %}
+                           <p class="text-danger">{{ form.password1.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12">
+                        <label for="your-password" class="form-label mb-2 font-18 font-heading fw-600">Confirmar contraseña</label>
+                        <div class="position-relative">
+                            <input type="password" name="password2" class="common-input common-input--bg common-input--withIcon"
+                                id="your-password" placeholder="6+ caracteres, 1 Mayúscula">
+                            <span class="input-icon toggle-password cursor-pointer" id="#your-password"><img
+                                    src="{% static 'assets/images/icons/lock-icon.svg' %}" alt=""></span>
+                        </div>
+                        {% if form.password2.errors %}
+                           <p class="text-danger">{{ form.password2.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-12">
+                        <div class="common-check my-2">
+                            <input class="form-check-input" type="checkbox" name="{{ form.agree.name }}" id="agree">
+                            <label class="form-check-label mb-0 fw-400 font-16 text-body" for="agree">Estoy de acuerdo con los términos y condiciones</label>
+                        </div>
+                        {% if form.agree.errors %}
+                           <p class="text-danger">{{ form.agree.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    {% if form.non_field_errors %}
+                        <p class="text-danger text-center">{{ form.non_field_errors.0 }}</p>
+                     {% endif %}
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-main btn-lg w-100 pill"> Crear Cuenta</button>
+                    </div>
+                    <div class="col-12">
+                        <a href="{% provider_login_url 'google' %}" class="btn btn-outline-light btn-lg-icon btn-lg w-100 pill">
+                            <span class="icon icon-left"><img src="{% static 'assets/images/icons/google.svg' %}" alt=""></span>
+                            Registrarse con Google
+                        </a>
+                    </div>
+                    <div class="col-sm-12 mb-0">
+                        <div class="have-account">
+                            <p class="text font-14">Ya tienes una cuenta? <a
+                                    class="link text-main text-decoration-underline  fw-500" href="{% url 'account_login' %}">Iniciar sesión</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

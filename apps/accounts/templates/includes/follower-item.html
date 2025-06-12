@@ -1,0 +1,29 @@
+{% load static %}
+<div class="follow-item">
+    <div class="follow-item__author">
+        <div class="d-flex align-items-center gap-2">
+            <div class="author-details__thumb flex-shrink-0">
+                <img style="border-radius: 50%;" src="{{ follower.get_profile_image }}" alt="">
+            </div>
+            <div class="author-details__content">
+                <h6 class="author-details__name font-18 mb-2"><a href="{% url 'profile' follower.username %}">{{ follower.username }}</a></h6>
+            </div>
+        </div>
+    </div>
+    <div class="follow-item__meta">
+        <strong class="font-11 fw-600 text-heading">
+            Productos: {{ follower.products.count }}
+            <br>
+            Miembro desde: {{ follower.date_joined|date:"F Y" }}
+        </strong>
+    </div>
+    <div class="follow-item__sales">
+        <div class="sales">
+            <ul class="star-rating mt-2">
+                {{ follower.fill_stars|safe }}
+            </ul>
+            <span class="star-rating__text text-heading font-12 fw-500"></span>
+        </div>
+    </div>
+    <button type="button" class="btn btn-main pill px-4">Seguir</button>
+</div>
