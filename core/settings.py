@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-+#)x9ece782dhoz^1x+x(yez7&4c4_z)5em==ueggsg+&g&1g3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -171,3 +171,8 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://vyvo.onrender.com',
+    'https://vyvo.0day.ltd',
+]
