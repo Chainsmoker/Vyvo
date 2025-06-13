@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Carrito{% endblock %}
+
 {% block content %}
 <section class="breadcrumb breadcrumb-four padding-static-y-60 section-bg position-relative z-index-1 overflow-hidden">
 
@@ -82,8 +85,10 @@
                       </tr>
                     </thead>
                     <tbody>
+                        <!--
                       <tr>
                         <td>
+
                             <div class="cart-item">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="cart-item__thumb">
@@ -112,16 +117,17 @@
                             <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$56.00</span>
                         </td>
                       </tr>
+                      -->
                     </tbody>
                 </table>
             </div>
 
             <div class="cart-content__bottom flx-between gap-2">
-                <a href="all-product.html" class="btn btn-outline-light flx-align gap-2 pill btn-lg"> 
+                <a href="javascript:void(0);" class="btn btn-outline-light flx-align gap-2 pill btn-lg"> 
                     <span class="icon line-height-1 font-20"><i class="las la-arrow-left"></i></span> 
                     Continuar comprando
                 </a>
-                <a href="cart-personal.html" class="btn btn-main flx-align gap-2 pill btn-lg"> 
+                <a href="javascript:void(0);" class="btn btn-main flx-align gap-2 pill btn-lg"> 
                     Siguiente
                     <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span> 
                 </a>

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}Productos{% endblock %}
+
 {% block content %}
 <section class="breadcrumb breadcrumb-one padding-y-60 section-bg position-relative z-index-1 overflow-hidden">
 
@@ -65,8 +67,6 @@
                         </li>
                     </ul>
                     <div class="list-grid d-flex align-items-center gap-2">
-                        <button class="list-grid__button list-button d-sm-flex d-none text-body"><i
-                                class="las la-list"></i></button>
                         <button class="list-grid__button grid-button d-sm-flex d-none active text-body"><i
                                 class="las la-border-all"></i></button>
                         <button class="list-grid__button sidebar-btn text-body d-lg-none d-flex"><i
@@ -75,39 +75,26 @@
                 </div>
                 <form action="#" class="filter-form pb-4 ">
                     <div class="row gy-3">
-                        <div class="col-sm-4 col-xs-6">
+                        <div class="col-sm-6 col-xs-6">
                             <div class="flx-between gap-1">
                                 <label for="tag" class="form-label font-16">Tag</label>
-                                <button type="reset" class="text-body font-14">Clear</button>
+                                <button type="reset" class="text-body font-14">Limpiar</button>
                             </div>
                             <div class="position-relative">
                                 <input type="text" class="common-input border-gray-five common-input--withLeftIcon"
-                                    id="tag" placeholder="Search By Tag...">
+                                    id="tag" placeholder="Buscar por tag...">
                                 <span class="input-icon input-icon--left"><img
                                         src="{% static 'assets/images/icons/search-two.svg' %}" alt=""></span>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-xs-6">
+                        <div class="col-sm-6 col-xs-6">
                             <div class="flx-between gap-1">
-                                <label for="Price" class="form-label font-16">Price</label>
-                                <button type="reset" class="text-body font-14">Clear</button>
+                                <label for="Price" class="form-label font-16">Precio</label>
+                                <button type="reset" class="text-body font-14">Limpiar</button>
                             </div>
                             <div class="position-relative">
                                 <input type="text" class="common-input border-gray-five" id="Price"
                                     placeholder="$7 - $29">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="flx-between gap-1">
-                                <label for="time" class="form-label font-16">Time Frame</label>
-                                <button type="reset" class="text-body font-14">Clear</button>
-                            </div>
-                            <div class="position-relative select-has-icon">
-                                <select id="time" class="common-input border-gray-five">
-                                    <option value="1">Now</option>
-                                    <option value="2">Yesterday</option>
-                                    <option value="2">1 Month Ago</option>
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -261,6 +248,7 @@
                             {% endfor %}
                         </div>
                     </div>
+                    <!--
                     <div class="tab-pane fade" id="pills-bestMatch" role="tabpanel"
                         aria-labelledby="pills-bestMatch-tab" tabindex="0">
                         <div class="row gy-4 list-grid-wrapper">
@@ -902,24 +890,6 @@
                             </div>
 
                         </div>
-                        <!-- Pagination Start -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination common-pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link flx-align gap-2 flex-nowrap" href="#">Next
-                                        <span class="icon line-height-1 font-20"><i
-                                                class="las la-arrow-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- Pagination End -->
-
                     </div>
                     <div class="tab-pane fade" id="pills-bestRating" role="tabpanel"
                         aria-labelledby="pills-bestRating-tab" tabindex="0">
@@ -1562,24 +1532,6 @@
                             </div>
 
                         </div>
-                        <!-- Pagination Start -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination common-pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link flx-align gap-2 flex-nowrap" href="#">Next
-                                        <span class="icon line-height-1 font-20"><i
-                                                class="las la-arrow-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- Pagination End -->
-
                     </div>
                     <div class="tab-pane fade" id="pills-trending" role="tabpanel"
                         aria-labelledby="pills-trending-tab" tabindex="0">
@@ -2222,23 +2174,6 @@
                             </div>
 
                         </div>
-                        <!-- Pagination Start -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination common-pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link flx-align gap-2 flex-nowrap" href="#">Next
-                                        <span class="icon line-height-1 font-20"><i
-                                                class="las la-arrow-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- Pagination End -->
 
                     </div>
                     <div class="tab-pane fade" id="pills-bestOffers" role="tabpanel"
@@ -2882,23 +2817,6 @@
                             </div>
 
                         </div>
-                        <!-- Pagination Start -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination common-pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link flx-align gap-2 flex-nowrap" href="#">Next
-                                        <span class="icon line-height-1 font-20"><i
-                                                class="las la-arrow-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- Pagination End -->
 
                     </div>
                     <div class="tab-pane fade" id="pills-bestSelling" role="tabpanel"
@@ -3542,243 +3460,12 @@
                             </div>
 
                         </div>
-                        <!-- Pagination Start -->
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination common-pagination">
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                <li class="page-item">
-                                    <a class="page-link flx-align gap-2 flex-nowrap" href="#">Next
-                                        <span class="icon line-height-1 font-20"><i
-                                                class="las la-arrow-right"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <!-- Pagination End -->
-
                     </div>
+                    -->
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="resource style-two padding-y-120 section-bg position-relative z-index-1 overflow-hidden">
-
-    <img src="{% static 'assets/images/shapes/element-moon1.png' %}" alt="" class="element one">
-    <img src="{% static 'assets/images/shapes/curve-pattern3.png' %}" alt=""
-        class="d-none position-absolute end-0 top-0 z-index--1">
-
-    <div class="container container-two">
-        <div class="section-heading style-left style-flex flx-between align-items-end gap-3">
-            <div class="section-heading__inner w-lg">
-                <h3 class="section-heading__title">Free Resources</h3>
-                <p class="section-heading__desc">Every month we pick some best products for you. This month's best
-                    web themes &amp; templates have arrived, chosen by our content specialists.</p>
-            </div>
-            <a href="#" class="btn btn-main btn-lg pill">View All Items</a>
-        </div>
-        <div class="resource-slider gy-4">
-            <div class="product-item shadow-sm">
-                <div class="product-item__thumb d-flex">
-                    <a href="product-details.html" class="link w-100">
-                        <img src="{% static 'assets/images/thumbs/product-img1.png' %}" alt="" class="cover-img">
-                    </a>
-                    <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
-                </div>
-                <div class="product-item__content">
-                    <h6 class="product-item__title">
-                        <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
-                    </h6>
-                    <div class="product-item__info flx-between gap-2">
-                        <span class="product-item__author">
-                            by
-                            <a href="profile.html" class="link hover-text-decoration-underline"> themepix</a>
-                        </span>
-                        <div class="flx-align gap-2">
-                            <h6 class="product-item__price mb-0">$120</h6>
-                            <span class="product-item__prevPrice text-decoration-line-through">$259</span>
-                        </div>
-                    </div>
-                    <div class="product-item__bottom flx-between gap-2">
-                        <div>
-                            <span class="product-item__sales font-14 mb-2">1200 Sales</span>
-                            <div class="d-flex align-items-center gap-1">
-                                <ul class="star-rating">
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                </ul>
-                                <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
-                            </div>
-                        </div>
-                        <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item shadow-sm">
-                <div class="product-item__thumb d-flex">
-                    <a href="product-details.html" class="link w-100">
-                        <img src="{% static 'assets/images/thumbs/product-img2.png' %}" alt="" class="cover-img">
-                    </a>
-                    <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
-                </div>
-                <div class="product-item__content">
-                    <h6 class="product-item__title">
-                        <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
-                    </h6>
-                    <div class="product-item__info flx-between gap-2">
-                        <span class="product-item__author">
-                            by
-                            <a href="profile.html" class="link hover-text-decoration-underline"> themepix</a>
-                        </span>
-                        <div class="flx-align gap-2">
-                            <h6 class="product-item__price mb-0">$100</h6>
-                            <span class="product-item__prevPrice text-decoration-line-through">$130</span>
-                        </div>
-                    </div>
-                    <div class="product-item__bottom flx-between gap-2">
-                        <div>
-                            <span class="product-item__sales font-14 mb-2">952 Sales</span>
-                            <div class="d-flex align-items-center gap-1">
-                                <ul class="star-rating">
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                </ul>
-                                <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
-                            </div>
-                        </div>
-                        <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item shadow-sm">
-                <div class="product-item__thumb d-flex">
-                    <a href="product-details.html" class="link w-100">
-                        <img src="{% static 'assets/images/thumbs/product-img3.png' %}" alt="" class="cover-img">
-                    </a>
-                    <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
-                </div>
-                <div class="product-item__content">
-                    <h6 class="product-item__title">
-                        <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
-                    </h6>
-                    <div class="product-item__info flx-between gap-2">
-                        <span class="product-item__author">
-                            by
-                            <a href="profile.html" class="link hover-text-decoration-underline"> themepix</a>
-                        </span>
-                        <div class="flx-align gap-2">
-                            <h6 class="product-item__price mb-0">$160</h6>
-                            <span class="product-item__prevPrice text-decoration-line-through">$000</span>
-                        </div>
-                    </div>
-                    <div class="product-item__bottom flx-between gap-2">
-                        <div>
-                            <span class="product-item__sales font-14 mb-2">1000 Sales</span>
-                            <div class="d-flex align-items-center gap-1">
-                                <ul class="star-rating">
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                </ul>
-                                <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
-                            </div>
-                        </div>
-                        <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item shadow-sm">
-                <div class="product-item__thumb d-flex">
-                    <a href="product-details.html" class="link w-100">
-                        <img src="{% static 'assets/images/thumbs/product-img4.png' %}" alt="" class="cover-img">
-                    </a>
-                    <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
-                </div>
-                <div class="product-item__content">
-                    <h6 class="product-item__title">
-                        <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
-                    </h6>
-                    <div class="product-item__info flx-between gap-2">
-                        <span class="product-item__author">
-                            by
-                            <a href="profile.html" class="link hover-text-decoration-underline"> themepix</a>
-                        </span>
-                        <div class="flx-align gap-2">
-                            <h6 class="product-item__price mb-0">$250</h6>
-                            <span class="product-item__prevPrice text-decoration-line-through">$300</span>
-                        </div>
-                    </div>
-                    <div class="product-item__bottom flx-between gap-2">
-                        <div>
-                            <span class="product-item__sales font-14 mb-2">320 Sales</span>
-                            <div class="d-flex align-items-center gap-1">
-                                <ul class="star-rating">
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                </ul>
-                                <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
-                            </div>
-                        </div>
-                        <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
-                    </div>
-                </div>
-            </div>
-            <div class="product-item shadow-sm">
-                <div class="product-item__thumb d-flex">
-                    <a href="product-details.html" class="link w-100">
-                        <img src="{% static 'assets/images/thumbs/product-img5.png' %}" alt="" class="cover-img">
-                    </a>
-                    <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
-                </div>
-                <div class="product-item__content">
-                    <h6 class="product-item__title">
-                        <a href="product-details.html" class="link">SaaS dashboard digital products Title here</a>
-                    </h6>
-                    <div class="product-item__info flx-between gap-2">
-                        <span class="product-item__author">
-                            by
-                            <a href="profile.html" class="link hover-text-decoration-underline"> themepix</a>
-                        </span>
-                        <div class="flx-align gap-2">
-                            <h6 class="product-item__price mb-0">$65</h6>
-                            <span class="product-item__prevPrice text-decoration-line-through">$85</span>
-                        </div>
-                    </div>
-                    <div class="product-item__bottom flx-between gap-2">
-                        <div>
-                            <span class="product-item__sales font-14 mb-2">1001 Sales</span>
-                            <div class="d-flex align-items-center gap-1">
-                                <ul class="star-rating">
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                    <li class="star-rating__item font-11"><i class="fas fa-star"></i></li>
-                                </ul>
-                                <span class="star-rating__text text-heading fw-500 font-14"> (16)</span>
-                            </div>
-                        </div>
-                        <a href="product-details.html" class="btn btn-outline-light btn-sm pill">Live Demo</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 {% endblock %}

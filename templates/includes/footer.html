@@ -16,12 +16,11 @@
                         <div class="footer-widget__logo">
                             <a href="index.html">
                                 <img src="{% static 'assets/images/logo/logo.png' %}" alt="" class="white-version">
-                                <img src="{% static 'assets/images/logo/white-logo.png' %}" alt=""
-                                    class="dark-version">
+                                <img src="{% static 'assets/images/logo.png' %}" alt=""
+                                    class="dark-version" style="width: 150px; height: 250px; object-fit: cover;">
                             </a>
                         </div>
-                        <p class="footer-widget__desc">Lorem consultancy elitsed do eiusmod tempor inci didunt ut
-                            labore dolore magna aliqua sed do eiusmod.</p>
+                        <p class="footer-widget__desc">Vyvo. Tienda virtual que ofrece productos de calidad a precios accesibles.</p>
                         <div class="footer-widget__social">
                             <ul class="social-icon-list">
                                 <li class="social-icon-list__item">
@@ -52,11 +51,11 @@
                     <div class="footer-widget">
                         <h5 class="footer-widget__title">Tienda</h5>
                         <ul class="footer-lists">
-                            <li class="footer-lists__item"><a href="all-product.html"
+                            <li class="footer-lists__item"><a href="{% url 'shop:products' %}"
                                     class="footer-lists__link">Productos </a></li>
-                            <li class="footer-lists__item"><a href="product-details.html"
+                            <li class="footer-lists__item"><a href="javascript:void(0)"
                                     class="footer-lists__link">Categorias</a></li>
-                            <li class="footer-lists__item"><a href="product-details.html"
+                            <li class="footer-lists__item"><a href="javascript:void(0)"
                                     class="footer-lists__link">Carrito</a></li>
                         </ul>
                     </div>
@@ -64,18 +63,12 @@
                 <div class="col-xl-1 d-xl-block d-none"></div>
                 <div class="col-xl-3 col-sm-6 col-xs-6">
                     <div class="footer-widget">
-                        <h5 class="footer-widget__title">Quick Links </h5>
+                        <h5 class="footer-widget__title">Blog </h5>
                         <ul class="footer-lists">
-                            <li class="footer-lists__item"><a href="dashboard.html"
-                                    class="footer-lists__link">Dashboard </a></li>
-                            <li class="footer-lists__item"><a href="login.html" class="footer-lists__link">Login
-                                </a></li>
-                            <li class="footer-lists__item"><a href="register.html"
-                                    class="footer-lists__link">Register</a></li>
-                            <li class="footer-lists__item"><a href="blog.html" class="footer-lists__link">Blog </a>
-                            </li>
-                            <li class="footer-lists__item"><a href="blog-details.html"
-                                    class="footer-lists__link">Blog Details</a></li>
+                            <li class="footer-lists__item"><a href="javascript:void(0)"
+                                    class="footer-lists__link">Blog </a></li>
+                            <li class="footer-lists__item"><a href="javascript:void(0)"
+                                    class="footer-lists__link">Populares</a></li>
                         </ul>
                     </div>
                 </div>
@@ -83,32 +76,20 @@
                     <div class="footer-widget">
                         <h5 class="footer-widget__title">Categorias</h5>
                         <ul class="footer-lists">
-                            <li class="footer-lists__item"><a href="all-product.html"
-                                    class="footer-lists__link">WordPress</a></li>
-                            <li class="footer-lists__item"><a href="all-product.html"
-                                    class="footer-lists__link">React</a></li>
-                            <li class="footer-lists__item"><a href="all-product.html"
-                                    class="footer-lists__link">HTML</a></li>
-                            <li class="footer-lists__item"><a href="all-product.html"
-                                    class="footer-lists__link">Laravel</a></li>
-                            <li class="footer-lists__item"><a href="all-product.html"
-                                    class="footer-lists__link">Figma</a></li>
+                            {% for category in categories_footer %}
+                            <li class="footer-lists__item"><a href="{% url 'shop:products' %}?category={{ category.id }}"
+                                    class="footer-lists__link">{{ category.name }}</a></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- bottom Footer Two -->
     <div class="bottom-footer-two">
         <div class="container container-two">
             <div class="bottom-footer__inner flx-between gap-3">
-                <p class="bottom-footer__text font-14"> Copyright &copy; 2024 DPmarket, All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#" class="footer-link font-14">Terms of service</a>
-                    <a href="#" class="footer-link font-14">Privacy Policy</a>
-                    <a href="contact.html" class="footer-link font-14">cookies</a>
-                </div>
+                <p class="bottom-footer__text font-14"> Copyright &copy; 2025 Vyvo, All rights reserved.</p>
             </div>
         </div>
     </div>

@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}{{ product.name }}{% endblock %}
+
 {% block content %}
 <section class="breadcrumb border-bottom p-0 d-block section-bg position-relative z-index-1">
 
@@ -72,27 +74,6 @@
                     </button>
                 </li>
             </ul>
-            <div class="social-share">
-                <button type="button" class="social-share__button">
-                    <i class="fas fa-share-alt"></i>
-                </button>
-                <div class="social-share__icons">
-                    <ul class="social-icon-list colorful-style">
-                        <li class="social-icon-list__item">
-                            <a href="https://www.facebook.com" class="social-icon-list__link text-body flex-center"><i
-                                    class="fab fa-facebook-f"></i></a>
-                        </li>
-                        <li class="social-icon-list__item">
-                            <a href="https://www.twitter.com" class="social-icon-list__link text-body flex-center"> <i
-                                    class="fab fa-pinterest-p"></i></a>
-                        </li>
-                        <li class="social-icon-list__item">
-                            <a href="https://www.google.com" class="social-icon-list__link text-body flex-center"> <i
-                                    class="fab fa-twitter"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -107,7 +88,7 @@
                         aria-labelledby="pills-product-details-tab" tabindex="0">
                         <div class="product-details">
                             <div class="product-details__thumb">
-                                <img src="{{ product.get_featured_image }}" alt="">
+                                <img style="height: 400px; object-fit: cover; width: 100%;" src="{{ product.get_featured_image }}" alt="">
                             </div>
                             <div class="product-details__buttons flx-align justify-content-center gap-3">
                                 <a href="#"
@@ -127,55 +108,15 @@
                             <div class="more-item">
                                 <div class="flx-between mb-4">
                                     <h5 class="more-item__title">Más Productos</h5>
-                                    <a href="profile.html"
-                                        class="text-heading fw-500 hover-text-decoration-underline">Ver Perfil</a>
                                 </div>
                                 <div class="more-item__content flx-align">
+                                    {% for product in more_products %}
                                     <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item1.png' %}" alt="">
+                                        <a href="{% url 'shop:product' product.slug %}" class="link w-100 h-100 d-block">
+                                            <img src="{{ product.get_featured_image }}" alt="">
                                         </a>
                                     </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item2.png' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item3.png' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item4.png' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item5.png' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item6.png' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item7.png' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item8.png' %}" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="more-item__item">
-                                        <a href="all-product.html" class="link w-100 h-100 d-block">
-                                            <img src="{% static 'assets/images/thumbs/more-item9.png' %}" alt="">
-                                        </a>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
 
@@ -183,7 +124,7 @@
                     </div>
                     <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab"
                         tabindex="0">
-                        <div class="flx-align justify-content-end">
+                        <div class="flx-align justify-content-center">
                             <button type="button"
                             data-bs-toggle="modal"
                             data-bs-target="#reviewsmodal"
@@ -192,29 +133,7 @@
                             Agregar review
                         </button>
                         </div>
-                        <div class="product-review-wrapper">
-                            {% for review in product.reviews.all %}
-                            <div class="product-review">
-                                <div class="product-review__top flx-between">
-                                    <div class="product-review__rating flx-align">
-                                        <div class="d-flex align-items-center gap-1">
-                                            <ul class="star-rating">
-                                                {{ review.fill_stars|safe }}
-                                            </ul>
-                                            <span class="star-rating__text text-body"> {{ review.rating }}</span>
-                                        </div>
-                                        <span class="product-review__reason"><span
-                                                class="product-review__subject">Customer Support</span> </span>
-                                    </div>
-                                    <div class="product-review__date">
-                                        de <a href="#" class="product-review__user text--base">{{ review.user }} </a> {{ review.created_at|date:"M, Y" }}
-                                    </div>
-                                </div>
-                                <div class="product-review__body">
-                                    <p class="product-review__desc">{{ review.comment }}</p>
-                                </div>
-                            </div>
-                            {% endfor %}
+                        <div class="product-review-wrapper" id="reviews-container">
                         </div>
                     </div>
 
@@ -229,15 +148,15 @@
                                 {% if user.is_authenticated %}
                                 <p>Deja una reseña para este producto</p>
                                 <form id="review-form" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                                    <ul class="star-rating mt-3">
-                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
-                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
-                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
-                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
-                                        <li class="star-rating__item font-15"><i class="fas fa-star"></i></li>
+                                    <ul class="star-rating mt-3" id="review-stars">
+                                        <li class="star-rating__item font-15"><i class="far fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="far fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="far fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="far fa-star"></i></li>
+                                        <li class="star-rating__item font-15"><i class="far fa-star"></i></li>
                                     </ul>
                                     <p id="rating-error" class="text-danger text-center"></p>
-                                    <input type="number" name="rating" id="rating" hidden>
+                                    <input type="number" name="rating" id="rating-input" hidden>
                                     <div class="w-100">
                                         <textarea name="comment" placeholder="Escribe tu reseña" cols="10" rows="5"></textarea>
                                         <p id="review-error" class="text-danger"></p>
@@ -272,6 +191,9 @@
                             resize: none;
                             padding: 10px;
                             border-radius: 10px
+                        }
+                        .star-rating__item {
+                            cursor: pointer;
                         }
                     </style>
 
@@ -322,7 +244,6 @@
                                 </span>
                             </div>
                         </div>
-                        <a href="{% url 'profile' product.creator.username %}" class="btn btn-outline-light w-100 pill mt-32">Ver perfil</a>
                     </div>
 
                     <ul class="meta-attribute">
@@ -342,6 +263,7 @@
                             <span class="name">Tamaño</span>
                             <span class="details">{{ product.file.size|filesizeformat }}</span>
                         </li>
+                        <!--
                         <li class="meta-attribute__item">
                             <span class="name">Tags</span>
                             <span class="details">
@@ -355,13 +277,122 @@
                                 <a href="#" class="hover-text-decoration-underline">dashboard,</a>
                             </span>
                         </li>
+                        -->
                     </ul>
-                    <!-- Meta Attribute List End -->
                 </div>
-                <!-- ======================= Product Sidebar End ========================= -->
             </div>
         </div>
     </div>
 </div>
-<!-- ======================= Product Details Section End ==================== -->
+
+<script>
+    const reviewForm = document.getElementById('review-form');
+    const reviewBtn = document.getElementById('review-btn');
+    const ratingError = document.getElementById('rating-error');
+    const reviewError = document.getElementById('review-error');
+
+    const reviewStars = document.getElementById('review-stars');
+    const stars = reviewStars.querySelectorAll('i');
+    const ratingInput = document.getElementById('rating-input');
+   
+    let rating = 0;
+
+    const getReviews = async () => {
+        const response = await fetch(`/product/reviews/{{product.slug}}/`)
+        const data = await response.json()
+        const reviews = data.reviews
+        const reviewsContainer = document.getElementById('reviews-container')
+        reviewsContainer.innerHTML = ''
+        if (reviews.length === 0) {
+            reviewsContainer.innerHTML = '<p class="text-center">Aún no hay reseñas, se el primero en dejar una!</p>'
+        } else {
+            reviews.forEach(review => {
+                const reviewElement = document.createElement('div')
+                reviewElement.classList.add('product-review')
+                const createdAt = new Date(review.created_at)
+                const formattedDate = createdAt.toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                })
+                reviewElement.innerHTML = `
+                    <div class="product-review__top flx-between">
+                        <div class="product-review__rating flx-align">
+                            <div class="d-flex align-items-center gap-1">
+                                <ul class="star-rating">
+                                    ${Array.from({ length: review.rating }, (_, i) => `<li class="star-rating__item font-11"><i class="fas fa-star"></i></li>`).join('')}
+                                    ${Array.from({ length: 5 - review.rating }, (_, i) => `<li class="star-rating__item font-11"><i class="far fa-star"></i></li>`).join('')}
+                                </ul>
+                            </div>
+                            <span class="product-review__reason"></span>
+                        </div>
+                        <div class="product-review__date">
+                            de <a href="#" class="product-review__user text--base">${review.user.username} </a> ${formattedDate}
+                        </div>
+                    </div>
+                    <div class="product-review__body">
+                        <p class="product-review__desc">${review.comment}</p>
+                    </div>
+                `
+                reviewsContainer.appendChild(reviewElement)
+            })
+        }
+    }
+
+    getReviews()
+
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+         rating = index + 1;
+         ratingInput.value = rating;
+         stars.forEach((star, i) => {
+            if (i < rating) {
+               star.classList.remove('far');
+               star.classList.add('fas');
+            } else {
+               star.classList.remove('fas');
+               star.classList.add('far');
+            }
+         });
+      });
+   });
+
+    reviewBtn.addEventListener('click', async (e) => {
+        e.preventDefault()
+        const formData = new FormData(reviewForm)
+        try {
+            const response = await fetch(`/product/review/{{product.slug}}/`, {
+                method: 'POST',
+                body: formData,
+            })
+            const data = await response.json()
+            if (data.success) {
+                getReviews()
+                reviewForm.reset()
+                ratingInput.value = 0;
+                stars.forEach((star, i) => {
+                star.classList.remove('fas');
+                star.classList.add('far');
+                });
+                rating = 0;
+                ratingError.textContent = ''
+                reviewError.textContent = ''
+                const modal = bootstrap.Modal.getInstance(document.getElementById('reviewsmodal'))
+                modal.hide()
+            } else {
+                ratingError.textContent = ''
+                reviewError.textContent = ''
+                if (data.errors.rating) {
+                    ratingError.textContent = data.errors.rating
+                }
+                if (data.errors.comment) {
+                    reviewError.textContent = data.errors.comment
+                }
+            }
+        } catch (error) {
+            console.error(error)
+            alert('Error al enviar la reseña')
+        }
+    })
+</script>
+
 {% endblock %}

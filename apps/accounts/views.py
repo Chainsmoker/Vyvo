@@ -1,10 +1,11 @@
-from django.views.generic import FormView, DetailView
+from django.views.generic import FormView, DetailView, TemplateView
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
-from apps.shop.models import Review
+from apps.shop.models import Review, Category
+from apps.shop.forms import CreateProductForm
 from .models import User
 from .forms import CustomSignupForm, EditProfileForm
 
@@ -21,6 +22,7 @@ class ProfileView(DetailView):
         context['is_owner'] = self.get_object() == self.request.user
         context['edit_profile_form'] = EditProfileForm(instance=self.get_object(), user=self.request.user)
         context['reviews'] = Review.objects.filter(product__creator=self.get_object()).exclude(user=self.get_object())
+        context['categories'] = Category.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -54,4 +56,3 @@ class SignupView(FormView):
     
     def get_success_url(self):
         return reverse('account_login') + '?register=success'
-        

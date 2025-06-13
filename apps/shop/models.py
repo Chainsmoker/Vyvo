@@ -5,7 +5,9 @@ from apps.accounts.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='categories_images/')
+    icon = models.ImageField(upload_to='categories_icons/')
+    image = models.ImageField(upload_to='categories_images/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
@@ -28,12 +30,18 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='reviews')
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
-    comment = models.TextField(validators=[MinLengthValidator(10), MaxLengthValidator(300)])
+    comment = models.TextField(validators=[MinLengthValidator(3), MaxLengthValidator(300)])
     created_at = models.DateTimeField(auto_now_add=True)
 
     def fill_stars(self):
         return '<li class="star-rating__item font-11"><i class="fas fa-star"></i></li>' * self.rating + '<li class="star-rating__item font-11"><i class="far fa-star"></i></li>' * (5 - self.rating)
     
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     name = models.CharField(max_length=100, validators=[MinLengthValidator(3)])
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
@@ -50,6 +58,7 @@ class Product(models.Model):
         )
     description = models.TextField(validators=[MinLengthValidator(10), MaxLengthValidator(1000)])
     file = models.FileField(upload_to='products_files/')
+    #tags = models.ManyToManyField(Tag, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     

@@ -2,11 +2,9 @@
     <div class="product-item section-bg">
         <div class="product-item__thumb d-flex">
             <a href="{% url 'shop:product' product.slug %}" class="link w-100">
-                <img src="{{ product.get_featured_image }}" alt=""
+                <img style="height: 210px" src="{{ product.get_featured_image }}" alt=""
                     class="cover-img">
             </a>
-            <button type="button" class="product-item__wishlist"><i
-                    class="fas fa-heart"></i></button>
         </div>
         <div class="product-item__content">
             <h6 class="product-item__title">
@@ -14,19 +12,17 @@
             </h6>
             <div class="product-item__info flx-between gap-2">
                 <span class="product-item__author">
-                    port
+                    por
                     <a href="{% url 'profile' product.creator.username %}" class="link hover-text-decoration-underline">
                         {{ product.creator.username }}</a>
                 </span>
                 <div class="flx-align gap-2">
                     <h6 class="product-item__price mb-0">${{ product.price }}</h6>
-                    <span
-                        class="product-item__prevPrice text-decoration-line-through">$259</span>
                 </div>
             </div>
             <div class="product-item__bottom flx-between gap-2">
                 <div>
-                    <span class="product-item__sales font-14 mb-2">1200 Sales</span>
+                    <span class="product-item__sales font-14 mb-2">1200 Ventas</span>
                     <div class="d-flex align-items-center gap-1">
                         <ul class="star-rating">
                             {{ product.fill_stars|safe }}

@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}Perfil{% endblock %}
+
 {% block content %}
 <section class="breadcrumb-three section-bg position-relative z-index-1 overflow-hidden">
 
@@ -25,9 +27,6 @@
                                     <span class="author-profile__membership font-14">Miembro desde {{ user.date_joined|date:"F Y" }}</span>
                                 </div>
                                 <div class="flx-align gap-3">
-                                    {% if is_owner %}
-                                    <a href="profile.html" class="btn btn-main pill px-4 fw-300"><i class="fas fa-plus"></i> Agregar </a>
-                                    {% endif %}
                                     {% if request.user != user %}
                                     <button type="button" class="btn btn-outline-black pill px-4">
                                         {% if request.user in user.follows.all %}
@@ -62,6 +61,13 @@
                         data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
                         aria-selected="true">Perfil</button>
                 </li>
+                {% if is_owner %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-create-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-create" type="button" role="tab" aria-controls="pills-create"
+                        aria-selected="true">Crear</button>
+                </li>
+                {% endif %}
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-portfolio-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-portfolio" type="button" role="tab" aria-controls="pills-portfolio"
@@ -93,6 +99,11 @@
                     <button class="nav-link" id="pills-download-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-download" type="button" role="tab" aria-controls="pills-download"
                         aria-selected="false">Descargas </button>
+                </li>
+                {% endif %}
+                {% if is_owner %}
+                <li class="nav-item" role="presentation">
+                    <a href="{% url 'account_logout' %}" class="nav-link"><i class="las la-sign-out-alt"></i> Salir </a>
                 </li>
                 {% endif %}
             </ul>
@@ -146,6 +157,127 @@
                     {% include 'includes/profile-sidebar.html' %}
                 </div>
             </div>
+
+            {% if is_owner %}
+            <div class="tab-pane fade" id="pills-create" role="tabpanel" aria-labelledby="pills-create-tab"
+                tabindex="0">
+
+                <div class="row gy-4">
+                    <div class="col-lg-4 pe-xl-5">
+                        <div class="setting-sidebar ">
+                            <h6 class="setting-sidebar__title">Vista previa</h6>
+                            <div class="col-xl-12 col-sm-12">
+                                <div class="product-item section-bg">
+                                    <div class="product-item__thumb d-flex">
+                                        <a href="javascript:void(0)" class="link w-100">
+                                            <img src="https://wowtheme7.com/tf/dpmarket/assets/images/thumbs/product-img1.png" alt=""
+                                                class="cover-img">
+                                        </a>
+                                    </div>
+                                    <div class="product-item__content">
+                                        <h6 class="product-item__title">
+                                            <a href="javascript:void(0)" class="link">Nombre</a>
+                                        </h6>
+                                        <div class="product-item__info flx-between gap-2">
+                                            <span class="product-item__author">
+                                                por
+                                                <a href="javascript:void(0)" class="link hover-text-decoration-underline">
+                                                    Usuario</a>
+                                            </span>
+                                            <div class="flx-align gap-2">
+                                                <h6 class="product-item__price mb-0">$0</h6>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__bottom flx-between gap-2">
+                                            <div>
+                                                <span class="product-item__sales font-14 mb-2">1200 Ventas</span>
+                                                <div class="d-flex align-items-center gap-1">
+                                                    <ul class="star-rating">
+                                                        <li class="star-rating__item"><i class="fas fa-star"></i></li>
+                                                        <li class="star-rating__item"><i class="fas fa-star"></i></li>
+                                                        <li class="star-rating__item"><i class="fas fa-star"></i></li>
+                                                        <li class="star-rating__item"><i class="fas fa-star"></i></li>
+                                                        <li class="star-rating__item"><i class="fas fa-star"></i></li>
+                                                    </ul>
+                                                    <span class="star-rating__text text-heading fw-500 font-14">
+                                                        (0)</span>
+                                                </div>
+                                            </div>
+                                            <a href="javascript:void(0)"
+                                                class="btn btn-outline-light btn-sm pill">Ver más</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-8">
+                        <form method="post" id="create-product-form" action="{% url 'shop:create_product' %}">
+                            <div class="card common-card border border-gray-five overflow-hidden mb-24" id="profile">
+                                <div class="card-header">
+                                    <h6 class="title">Crear Producto</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-sm-12 col-xs-12">
+                                            <label for="ProfileHeading" class="form-label">Nombre *</label>
+                                            <input type="text"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="name">
+                                            <span class="text-danger" id="name-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="ProfileHeading" class="form-label">Categoria *</label>
+                                            <select name="category" id="category" class="common-input common-input--md border--color-dark bg--white">
+                                                <option value="">Selecciona una categoria</option>
+                                                {% for category in categories %}
+                                                <option value="{{ category.id }}">{{ category.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <span class="text-danger" id="category-error"></span>
+                                        </div>
+                                        <div class="col-sm-6 col-xs-6">
+                                            <label for="ProfileHeading" class="form-label">Precio *</label>
+                                            <input type="number"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="price">
+                                            <span class="text-danger" id="price-error"></span>
+                                        </div>
+                                        <div class="col-sm-12 col-xs-12">
+                                            <label for="aboutProfile" class="form-label">Descripcion *</label>
+                                            <textarea class="common-input common-input--md border--color-dark bg--white"
+                                                name="description"></textarea>
+                                            <span class="text-danger" id="description-error"></span>
+                                        </div>
+                                        <div class="col-sm-12 col-xs-12">
+                                            <label for="fileUpload" class="form-label">Galeria *</label>
+                                            <input type="file"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="images" multiple>
+                                            <span class="text-danger" id="images-error"></span>
+                                        </div>
+                                        <div class="col-sm-12 col-xs-12">
+                                            <label for="fileUpload" class="form-label">Archivo a descargar *</label>
+                                            <input type="file"
+                                                class="common-input common-input--md border--color-dark bg--white"
+                                                name="file">
+                                            <span class="text-danger" id="file-error"></span>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <span class="text-center w-100" id="global-product-message"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn w-100 btn-main btn-md" id="edit-profile-button">Guardar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
 
             <div class="tab-pane fade" id="pills-portfolio" role="tabpanel" aria-labelledby="pills-portfolio-tab"
                 tabindex="0">
@@ -260,7 +392,7 @@
 
 
                     <div class="col-lg-8">
-                        <form method="post" id="edit-profile-form" action="/accounts/profile/@{{ user.username }}">
+                        <form method="post" id="edit-profile-form" action="/accounts/profile/@{{ user.username }}/">
                             {% csrf_token %}
                             <div class="card common-card border border-gray-five overflow-hidden mb-24" id="profile">
                                 <div class="card-header">
@@ -464,6 +596,7 @@
                 <div class="row gy-4">
                     <div class="col-lg-12">
                         <div class="download-wrapper ">
+                            <!--
                             <div class="download-item flx-between gap-3">
                                 <div class="download-item__content flx-align flex-nowrap gap-3 flex-grow-1">
                                     <div class="download-item__thumb flex-shrink-0">
@@ -499,11 +632,10 @@
                                     </div>
                                 </div>
                             </div>
+                            -->
                         </div>
                     </div>
                 </div>
-                <!-- ========================= Download Section End ====================== -->
-    
             </div>
             {% endif %}
         </div>
@@ -514,33 +646,81 @@
 <script>
     const form = document.getElementById('edit-profile-form');
     const button = document.getElementById('edit-profile-button');
-    const globalElement = document.getElementById('global-message');
+
+    const createProductForm = document.getElementById('create-product-form');
+
+    const showMessage = (element, message, type) => {
+        element.textContent = message;
+        element.classList.add(type);
+    }
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(form);
+        const globalElement = document.getElementById('global-message');
         
-        const response = await fetch(form.action, {
-            method: 'POST',
-            body: formData,
-        });
-        
-        const data = await response.json();
-        if (!data.success) {
-            const errors = data.errors;
-            Object.entries(errors).forEach(([key, value]) => {
-                const errorElement = document.getElementById(`${key}-error`);
-                if (errorElement) {
-                    errorElement.textContent = value;
-                } else {
-                    if (globalElement) {
-                        globalElement.textContent = value;
-                    }
-                }
+        try {
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData,
             });
-        }
+            
+            const data = await response.json();
+            if (!data.success) {
+                const errors = data.errors;
+                Object.entries(errors).forEach(([key, value]) => {
+                    const errorElement = document.getElementById(`${key}-error`);
+                    if (errorElement) {
+                        errorElement.textContent = value;
+                    } else {
+                        if (globalElement) {
+                            showMessage(globalElement, data.errors.__all__, 'text-danger');
+                        }
+                    }
+                });
+                return;
+            }
 
-        window.location.reload();
+            showMessage(globalElement, 'Perfil actualizado exitosamente', 'text-success');
+            form.reset();
+        } catch (error) {
+            console.error(error);
+            showMessage(globalElement, 'Error al actualizar el perfil', 'text-danger');
+        }
+    });
+
+    createProductForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(createProductForm);
+        const globalElement = document.getElementById('global-product-message');
+        
+        try {
+            const response = await fetch(createProductForm.action, {
+                method: 'POST',
+                body: formData,
+            });
+            
+            const data = await response.json();
+
+            if (!data.success) {
+                const errors = data.errors;
+                Object.entries(errors).forEach(([key, value]) => {
+                    const errorElement = document.getElementById(`${key}-error`);
+                    if (errorElement) {
+                        errorElement.textContent = value;
+                    } else {
+                        showMessage(globalElement, data.errors.__all__, 'text-danger');
+                    }
+                });
+                return;
+            }
+
+            window.location.href = window.location.origin + data.url;
+
+        } catch (error) {
+            console.error(error);
+            showMessage(globalElement, 'Error al crear el producto', 'text-danger');
+        }
     });
 </script>
 {% endblock %}

@@ -3,11 +3,11 @@
     <div class="container container-full">
         <nav class="header-inner flx-between">
             <div class="logo">
-                <a href="index.html" class="link white-version">
+                <a href="{% url 'pages:index' %}" class="link white-version">
                     <img src="{% static 'assets/images/logo/logo.png' %}" alt="Logo">
                 </a>
-                <a href="index.html" class="link dark-version">
-                    <img src="{% static 'assets/images/logo/white-logo.png' %}" alt="Logo">
+                <a href="{% url 'pages:index' %}" class="link dark-version">
+                    <img src="{% static 'assets/images/logo.png' %}" style="height: 100px; width: 150px; object-fit: cover;" alt="Logo">
                 </a>
             </div>
 
@@ -27,29 +27,17 @@
                         <a href="javascript:void(0)" class="nav-menu__link">Blog</a>
                     </li>
                     <li class="nav-menu__item">
-                        <a href="{% url 'pages:contact' %}" class="nav-menu__link">Contacto</a>
+                        <a href="javascript:void(0)" class="nav-menu__link">Contacto</a>
                     </li>
                 </ul>
             </div>
 
             <div class="header-right flx-align">
-                <a href="cart.html" class="header-right__button cart-btn position-relative">
+                <a href="{% url 'shop:cart' %}" class="header-right__button cart-btn position-relative">
                     <img src="{% static 'assets/images/icons/cart.svg' %}" alt="" class="white-version">
                     <img src="{% static 'assets/images/icons/cart-white.svg' %}" alt="" class="dark-version">
                     <span class="qty-badge font-12">0</span>
                 </a>
-
-                <div class="theme-switch-wrapper position-relative">
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" class="d-none" id="checkbox">
-                        <span class="slider text-black header-right__button white-version">
-                            <img src="{% static 'assets/images/icons/sun.svg' %}" alt="">
-                        </span>
-                        <span class="slider text-black header-right__button dark-version">
-                            <img src="{% static 'assets/images/icons/moon.svg' %}" alt="">
-                        </span>
-                    </label>
-                </div>
 
                 <div class="header-right__inner gap-3 flx-align d-lg-flex d-none">
 

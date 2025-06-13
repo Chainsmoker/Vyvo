@@ -1,7 +1,8 @@
 {% load static %}
 <div class="profile-sidebar">
     <div class="profile-sidebar__item">
-        <h5 class="mb-4">Productos destacados</h5>
+        <h5 class="mb-4">Perfil</h5>
+        <!--
         <div class="featured-item d-flex align-items-center gap-4">
             <div class="featured-item__thumb">
                 <a href="product-details.html" class="link"><img
@@ -24,6 +25,7 @@
                 </div>
             </div>
         </div>
+        -->
 
         <div class="profile-sidebar__author">
             <div class="author-details p-0 border-0 mt-0">
@@ -42,7 +44,7 @@
                         </span>
                     </div>
                 </div>
-                <a href="profile.html" class="btn btn-outline-light w-100 pill mt-32 fw-600">Total
+                <a href="{% url 'shop:products' %}" class="btn btn-outline-light w-100 pill mt-32 fw-600">Total
                     {{ user.products.count }} Productos</a>
             </div>
         </div>

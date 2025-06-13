@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator, MinLengthValidator, MaxLength
 from django.db.models import Avg
 
 class User(AbstractUser):
-    profile_picture = models.ImageField(upload_to='profile_pictures', blank=True, null=True)
+    profile_picture = models.ImageField(upload_to='profile_pictures', default='/profile_pictures/default.avif')
     banner_picture = models.ImageField(upload_to='banner_pictures', blank=True, null=True)
     is_creator = models.BooleanField(default=False)
     bio = models.TextField(blank=True, null=True, validators=[
@@ -34,8 +34,6 @@ class User(AbstractUser):
     def get_profile_image(self):
         if self.profile_picture:
             return self.profile_picture.url
-        else:
-            return '/static/assets/images/default.avif'
 
     def get_cover_image(self):
         if self.banner_picture:
