@@ -175,4 +175,7 @@ SOCIALACCOUNT_PROVIDERS = {
 CSRF_TRUSTED_ORIGINS = [
     'https://vyvo.onrender.com',
     'https://vyvo.0day.ltd',
+    'https://d483-181-233-26-27.ngrok-free.app'
 ]
+
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET')

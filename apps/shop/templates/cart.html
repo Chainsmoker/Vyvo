@@ -80,44 +80,46 @@
                     <thead>
                       <tr>
                         <th>Producto</th>
-                        <th>Precio</th>
+                        <th>Autor</th>
                         <th>Total</th>
                       </tr>
                     </thead>
-                    <tbody>
-                        <!--
-                      <tr>
-                        <td>
+                    <tbody id="cart-items">
+                        {% for product in products %}
+                        <tr>
+                            <td>
 
-                            <div class="cart-item">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="cart-item__thumb">
-                                        <a href="product-details.html" class="link">
-                                            <img src="{% static 'assets/images/thumbs/product-img2.png' %}" alt="" class="cover-img">
-                                        </a>
+                                <div class="cart-item">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="cart-item__thumb">
+                                            <a href="{% url 'shop:product' product.slug %}" class="link">
+                                                <img src="{{ product.get_featured_image }}" alt="" class="cover-img">
+                                            </a>
+                                        </div>
+                                        <div class="cart-item__content">
+                                            <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-4"> <a href="{% url 'shop:product' product.slug %}" class="link">{{ product.name }}</a></h6>
+                                            <span class="cart-item__price font-18 text-heading fw-500">Category: <span class="text-body font-14">{{ product.category.name }}</span></span>
+                                        </div>
                                     </div>
-                                    <div class="cart-item__content">
-                                        <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-4"> <a href="product-details.html" class="link">Digital product name here</a></h6>
-                                        <span class="cart-item__price font-18 text-heading fw-500">Category: <span class="text-body font-14">WordPress</span></span>
+                                    <div class="flx-align gap-4 mt-3 mt-lg-4">
+                                        <button type="button" class="rounded-btn delete-btn text-danger hover-text-decoration-underline btn-delete" data-product-id="{{ product.id }}">Eliminar</button>
                                     </div>
                                 </div>
-                                <div class="flx-align gap-4 mt-3 mt-lg-4">
-                                    <div class="flx-align gap-2">
-                                        <button type="button" class="product-item__wishlist style-two"><i class="fas fa-heart"></i></button>
-                                        <span class="text-body">Add to wishlist</span>
-                                    </div>
-                                    <button type="button" class="rounded-btn delete-btn text-danger hover-text-decoration-underline">Remove</button>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$28.00</span>
-                        </td>
-                        <td>
-                            <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">$56.00</span>
-                        </td>
-                      </tr>
-                      -->
+                            </td>
+                            <td>
+                                <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">{{ product.creator.username }}</span>
+                            </td>
+                            <td>
+                                <span class="cart-item__totalPrice text-body font-18 fw-400 mb-0">${{ product.price }}</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <p class="font-18 text-body">No hay productos en el carrito</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -127,12 +129,58 @@
                     <span class="icon line-height-1 font-20"><i class="las la-arrow-left"></i></span> 
                     Continuar comprando
                 </a>
-                <a href="javascript:void(0);" class="btn btn-main flx-align gap-2 pill btn-lg"> 
+                {% if products %}
+                <a href="javascript:void(0);" class="btn btn-main flx-align gap-2 pill btn-lg" id="create-checkout-session"> 
                     Siguiente
                     <span class="icon line-height-1 font-20"><i class="las la-arrow-right"></i></span> 
                 </a>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.btn-delete');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-product-id');
+                fetch(`/remove-from-cart/${productId}/`, {
+                    method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.length === 0) {
+                            document.getElementById('cart-items').innerHTML = '<tr><td colspan="4" class="text-center"><p class="font-18 text-body">No hay productos en el carrito</p></td></tr>';
+                        }
+                    }
+                });
+            });
+        });
+
+        const createCheckoutSession = document.getElementById('create-checkout-session');
+        createCheckoutSession.addEventListener('click', function() {
+            createCheckoutSession.disabled = true;
+            createCheckoutSession.textContent = 'Procesando...';
+            fetch('/create-checkout-session/', {
+                method: 'POST',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    window.location.href = data.url;
+                } else {
+                    window.location.href = window.location.origin + '/accounts/login/?login=1';
+                }
+            })
+            .catch(error => {
+                console.error('Error al crear la sesión de checkout:', error);
+            }).finally(() => {
+                createCheckoutSession.disabled = false;
+                createCheckoutSession.textContent = 'Siguiente';
+            });
+        });
+    });
+</script>
 {% endblock content %}

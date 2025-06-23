@@ -58,7 +58,7 @@
                                 tu contraseña?</a>
                         </div>
                     </div>
-                    {% if form.non_field_errors %}
+                    {% if form.non_field_errors or form.errors %}
                         <p class="text-danger text-center">{{ form.non_field_errors.0 }}</p>
                     {% endif %}
 
@@ -66,6 +66,10 @@
                         {% if not form.non_field_errors %}
                         <p class="text-success text-center">Contraseña cambiada correctamente, inicia sesión con tu nueva contraseña.</p>
                         {% endif %}
+                    {% endif %}
+
+                    {% if request.GET.login %}
+                        <p class="text-danger text-center">Debes iniciar sesión para continuar.</p>
                     {% endif %}
                     <div class="col-12">
                         <button type="submit" class="btn btn-main btn-lg w-100 pill"> Iniciar Sesión</button>

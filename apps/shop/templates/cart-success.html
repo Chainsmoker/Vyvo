@@ -1,0 +1,61 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block content %}
+<section class="cart-thank section-bg padding-y-120 position-relative z-index-1 overflow-hidden">
+
+    <img src="{% static 'assets/images/gradients/thank-you-gradient.png' %}" alt="" class="bg--gradient">
+
+    <div class="container container-two">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 col-sm-10">
+                <div class="cart-thank__content text-center">
+                    <h2 class="cart-thank__title mb-48">Gracias por tu compra!</h2>
+                    <p>Visita tu perfil para descargar tus productos</p>
+                    <div class="cart-thank__img">
+                        <img src="{% static 'assets/images/thumbs/thank-evenelope.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="padding-t-120">
+            <div class="cart-thank__box">
+                <div class="row gy-4">
+                    <div class="col-lg-121">
+                        <div class="thank-card">
+                            <h5 class="thank-card__title mb-3">Orden</h5>
+                            <ul class="list-text">
+                                <li class="list-text__item flx-align flex-nowrap">
+                                    <span class="text text-heading fw-500 font-heading fw-700 font-18">Nombre</span>
+                                    <span class="text text-heading fw-500">Precio</span>
+                                </li>
+                                {% for product in products %}
+                                <li class="list-text__item flx-align flex-nowrap">
+                                    <span class="text text-heading fw-500">{{ product.name }}</span>
+                                    <span class="text">${{ product.price }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="thank-card__thumb mt-64 mb-3">
+                                <img src="assets/images/thumbs/rating-img.png" alt="">
+                            </div>
+                            <div class="flx-between gap-2">
+                                <p class="text">No te olvides de calificar!</p>
+                                <a href="{% url 'profile' request.user.username %}" class="btn btn-main flx-align gap-2 pill">
+                                    Ir a mis compras
+                                    <span class="icon line-height-1 font-20"><i
+                                            class="las la-arrow-right"></i></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}  

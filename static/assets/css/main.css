@@ -6848,6 +6848,7 @@ input[type=number] {
 }
 
 .process-list__link::after {
+    display: none;
     position: absolute;
     content: "";
     width: 130px;

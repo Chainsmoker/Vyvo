@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.http import JsonResponse
-from apps.shop.models import Review, Category
+from apps.shop.models import Review, Category, Order
 from apps.shop.forms import CreateProductForm
 from .models import User
 from .forms import CustomSignupForm, EditProfileForm
@@ -23,6 +23,7 @@ class ProfileView(DetailView):
         context['edit_profile_form'] = EditProfileForm(instance=self.get_object(), user=self.request.user)
         context['reviews'] = Review.objects.filter(product__creator=self.get_object()).exclude(user=self.get_object())
         context['categories'] = Category.objects.all()
+        context['orders'] = Order.objects.filter(user=self.get_object())
         return context
 
     def post(self, request, *args, **kwargs):

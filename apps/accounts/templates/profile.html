@@ -596,43 +596,37 @@
                 <div class="row gy-4">
                     <div class="col-lg-12">
                         <div class="download-wrapper ">
-                            <!--
+                            {% for order in orders %}
                             <div class="download-item flx-between gap-3">
                                 <div class="download-item__content flx-align flex-nowrap gap-3 flex-grow-1">
                                     <div class="download-item__thumb flex-shrink-0">
-                                        <img src="{% static 'assets/images/thumbs/rejected1.png' %}" alt="">
+                                        <img style="height: 100%;" src="{{ order.product.get_featured_image }}" alt="">
                                     </div>
                                     <div class="download-item__info">
                                         <h6 class="download-item__title mb-1">
-                                            <a href="#" class="link">CityScape - Real Estate HTML Template</a>
+                                            <a href="{% url 'shop:product' order.product.slug %}" class="link">{{ order.product.name }}</a>
                                         </h6>
-                                        <a href="#"
-                                            class="download-item__text text-main mb-3 font-12 hover-text-decoration-underline">Tools
-                                            License</a>
-                                        <div class="common-check">
-                                            <input class="form-check-input" type="checkbox" name="checkbox" id="notifiedd">
-                                            <label class="form-check-label text-body fw-400 mb-0" for="notifiedd">Get
-                                                notified by email if this item is updated</label>
-                                        </div>
+                                        <a href="{% url 'profile' order.product.creator.username %}"
+                                            class="download-item__text text-main mb-3 font-12 hover-text-decoration-underline">{{ order.product.creator.username }}</a>
                                     </div>
                                 </div>
                                 <div
                                     class="download-item__right flex-shrink-0 d-inline-flex flex-column gap-2 align-items-center">
-                                    <button type="button" class="btn btn-main pill px-4">
-                                        Download <span class="icon-right icon ms-0"> <i class="las la-download"></i></span>
-                                    </button>
+                                    <a href="{{ order.product.file.url }}" class="btn btn-main pill px-4" download="">
+                                        Descargar <span class="icon-right icon ms-0"> <i class="las la-download"></i></span>
+                                    </a>
                                     <div class="bg-white py-1 px-2 rounded d-inline-block">
                                         <ul class="star-rating justify-content-center">
-                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
-                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
-                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
-                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
-                                            <li class="star-rating__item font-14"><i class="fas fa-star"></i></li>
+                                            {{ order.product.fill_stars|safe }}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            -->
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">Aún no has realizado ninguna compra</td>
+                            </tr>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>

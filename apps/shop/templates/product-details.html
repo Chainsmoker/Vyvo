@@ -38,13 +38,6 @@
                             <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
                                 <span class="text">By <a href="#" class="link text-main fw-600">{{ product.creator }}</a> </span>
                             </div>
-                            <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
-                                <span class="icon">
-                                    <img src="{% static 'assets/images/icons/cart-icon.svg' %}" alt="" class="white-version">
-                                    <img src="{% static 'assets/images/icons/cart-white.svg' %}" alt="" class="dark-version w-20">
-                                </span>
-                                <span class="text">158 Ventas</span>
-                            </div>
                         </div>
 
                     </div>
@@ -145,7 +138,6 @@
                               </div>
                               <div class="review-content">
                                 <h3 class="title">Escribe una reseña</h3>
-                                {% if user.is_authenticated %}
                                 <p>Deja una reseña para este producto</p>
                                 <form id="review-form" style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
                                     <ul class="star-rating mt-3" id="review-stars">
@@ -165,9 +157,6 @@
                                         <button id="review-btn" class="btn btn-main d-flex justify-content-center align-items-center gap-2 pill px-sm-5 mt-3">Enviar</button>
                                     </div>
                                 </form>
-                                 {% else %}
-                                 <p>Debes iniciar sesión para dejar una reseña</p>
-                                 {% endif %}
                               </div>
                            </div>
                         </div>
@@ -221,7 +210,7 @@
                         </li>
                     </ul>
 
-                    <button type="button"
+                    <button type="button" id="add-to-cart-btn"
                         class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
                         <img src="{% static 'assets/images/icons/add-to-cart.svg' %}" alt="">
                         Agregar al carrito
@@ -391,6 +380,21 @@
         } catch (error) {
             console.error(error)
             alert('Error al enviar la reseña')
+        }
+    })
+
+    const addTocart = document.getElementById('add-to-cart-btn')
+    const productId = '{{ product.id }}'
+
+    addTocart.addEventListener('click', async (e) => {
+        e.preventDefault()
+        const response = await fetch(`/add-to-cart/${productId}/`, {
+            method: 'POST',
+        })
+        const data = await response.json()
+        if (data.success) {
+            addTocart.classList.add('disabled')
+            addTocart.textContent = 'Agregado al carrito!'
         }
     })
 </script>
