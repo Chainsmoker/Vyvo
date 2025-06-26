@@ -8,7 +8,7 @@ class Command(BaseCommand):
     
     def handle(self, *args, **kwargs):
         fake = Faker()
-        for i in range(5):
+        for i in range(10):
             username = fake.user_name()
             User.objects.create_user(
                 username=username,

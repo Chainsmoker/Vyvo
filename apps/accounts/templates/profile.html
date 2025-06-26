@@ -73,7 +73,7 @@
                         data-bs-target="#pills-portfolio" type="button" role="tab" aria-controls="pills-portfolio"
                         aria-selected="false">Portafolio </button>
                 </li>
-                <li class="nav-item" role="presentation">
+                <!-- <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-followerss-tab" data-bs-toggle="pill"
                         data-bs-target="#pills-followerss" type="button" role="tab" aria-controls="pills-followerss"
                         aria-selected="false">Seguidores <span class="notification">{{ user.followed_by.count }}</span> </button>
@@ -83,6 +83,7 @@
                         data-bs-target="#pills-Followingg" type="button" role="tab" aria-controls="pills-Followingg"
                         aria-selected="false">Siguiendo <span class="notification">{{ user.follows.count }}</span> </button>
                 </li>
+                -->
                 {% if is_owner %}
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-Settingss-tab" data-bs-toggle="pill"
@@ -190,7 +191,6 @@
                                         </div>
                                         <div class="product-item__bottom flx-between gap-2">
                                             <div>
-                                                <span class="product-item__sales font-14 mb-2">1200 Ventas</span>
                                                 <div class="d-flex align-items-center gap-1">
                                                     <ul class="star-rating">
                                                         <li class="star-rating__item"><i class="fas fa-star"></i></li>
@@ -314,7 +314,6 @@
                                         </div>
                                         <div class="product-item__bottom flx-between gap-2">
                                             <div>
-                                                <span class="product-item__sales font-14 mb-2">1200 Sales</span>
                                                 <div class="d-flex align-items-center gap-1">
                                                     <ul class="star-rating">
                                                         {{ product.fill_stars|safe }}

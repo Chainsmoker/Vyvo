@@ -58,6 +58,7 @@ class Product(models.Model):
         )
     description = models.TextField(validators=[MinLengthValidator(10), MaxLengthValidator(1000)])
     file = models.FileField(upload_to='products_files/')
+    approved = models.BooleanField(default=False)
     #tags = models.ManyToManyField(Tag, related_name='products')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

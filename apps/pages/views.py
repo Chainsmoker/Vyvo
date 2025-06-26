@@ -14,7 +14,7 @@ class IndexView(TemplateView):
             'sketch': Product.objects.filter(category__name='Sketch').order_by('-created_at')[:12],
             'figma': Product.objects.filter(category__name='Figma').order_by('-created_at')[:12],
             'bootstrap': Product.objects.filter(category__name='Bootstrap').order_by('-created_at')[:12],
-            'flutter': Product.objects.filter(category__name='Flutter').order_by('-created_at')[:12],
+            'tailwind': Product.objects.filter(category__name='Tailwind').order_by('-created_at')[:12],
             'react': Product.objects.filter(category__name='React').order_by('-created_at')[:12],
         }
         context['featured_products'] = Product.objects.all()[:4]

@@ -135,9 +135,13 @@ def get_reviews(request, slug):
 @csrf_exempt
 def add_to_cart(request, product_id):
     if request.method == 'POST':
+        direct_purchase = request.POST.get('direct_purchase', False)
         cart = request.session.get('cart', [])
         cart.append(product_id)
         request.session['cart'] = cart
+        if direct_purchase:
+            request.session['cart'] = [product_id]
+            return JsonResponse({'success': True, 'length': len(cart), 'direct_purchase': True})
         return JsonResponse({'success': True, 'length': len(cart)})
 
 @csrf_exempt
@@ -215,6 +219,8 @@ def stripe_webhook(request):
                 Order.objects.create(user_id=user_id, product_id=product_id)
         except Exception as e:
             print(e)
-            return JsonResponse({'error': str(e)}, status=400) 
+            return JsonResponse({'error': str(e)}, status=400)
+
+        request.session['cart'] = [] 
 
     return JsonResponse({'status': 'success'}, status=200)

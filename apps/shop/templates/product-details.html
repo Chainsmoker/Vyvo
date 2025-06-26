@@ -84,7 +84,8 @@
                                 <img style="height: 400px; object-fit: cover; width: 100%;" src="{{ product.get_featured_image }}" alt="">
                             </div>
                             <div class="product-details__buttons flx-align justify-content-center gap-3">
-                                <a href="#"
+                                <a href="javascript:void(0);" 
+                                    id="direct-purchase-btn"
                                     class="btn btn-main d-inline-flex align-items-center gap-2 pill px-sm-5 justify-content-center">
                                     <i class="fas fa-cart-plus"></i>
                                     Comprar
@@ -92,8 +93,6 @@
 
                                 <a href="javascript:void(0);" class="screenshot-btn btn btn-white pill px-sm-5"
                                     data-images='[{% for image in product.images.all %}"{{ image.image.url }}", {% endfor %}]'><i class="fas fa-images"></i> Capturas</a>
-
-
                             </div>
 
                             <p class="product-details__desc">{{ product.description }}</p>
@@ -210,11 +209,19 @@
                         </li>
                     </ul>
 
+                    {% if product.id not in request.session.cart %}
                     <button type="button" id="add-to-cart-btn"
                         class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
                         <img src="{% static 'assets/images/icons/add-to-cart.svg' %}" alt="">
                         Agregar al carrito
                     </button>
+                    {% else %}
+                    <button type="button" id="add-to-cart-btn" disabled
+                        class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
+                        <img src="{% static 'assets/images/icons/add-to-cart.svg' %}" alt="">
+                        Agregado al carrito
+                    </button>
+                    {% endif %}
 
                     <div class="author-details">
                         <div class="d-flex align-items-center gap-2">
@@ -247,10 +254,6 @@
                         <li class="meta-attribute__item">
                             <span class="name">Categoría</span>
                             <span class="details">{{ product.category.name }}</span>
-                        </li>
-                        <li class="meta-attribute__item">
-                            <span class="name">Tamaño</span>
-                            <span class="details">{{ product.file.size|filesizeformat }}</span>
                         </li>
                         <!--
                         <li class="meta-attribute__item">
@@ -396,6 +399,44 @@
             addTocart.classList.add('disabled')
             addTocart.textContent = 'Agregado al carrito!'
         }
+    })
+
+    const directPurchaseBtn = document.getElementById('direct-purchase-btn')
+    directPurchaseBtn.addEventListener('click', async (e) => {
+        e.preventDefault()
+        directPurchaseBtn.disabled = true;
+        directPurchaseBtn.textContent = 'Procesando...';
+
+        const formData = new FormData()
+        formData.append('direct_purchase', true)
+        const response = await fetch(`/add-to-cart/${productId}/`, {
+            method: 'POST',
+            body: formData,
+        })
+        const data = await response.json()
+        if (data.success) {
+            if (data.direct_purchase) {
+                fetch('/create-checkout-session/', {
+                    method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.url) {
+                        window.location.href = data.url;
+                    } else {
+                        window.location.href = window.location.origin + '/accounts/login/?login=1';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al crear la sesión de checkout:', error);
+                }).finally(() => {
+                    this.disabled = false;
+                    this.textContent = 'Comprar';
+                });
+            }
+            return
+        }
+        alert('Error al procesar la compra')
     })
 </script>
 
