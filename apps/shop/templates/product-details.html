@@ -208,21 +208,11 @@
                             <span class="text">Reembolsable</span>
                         </li>
                     </ul>
-
-                    {% if product.id not in request.session.cart %}
                     <button type="button" id="add-to-cart-btn"
                         class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
                         <img src="{% static 'assets/images/icons/add-to-cart.svg' %}" alt="">
                         Agregar al carrito
                     </button>
-                    {% else %}
-                    <button type="button" id="add-to-cart-btn" disabled
-                        class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
-                        <img src="{% static 'assets/images/icons/add-to-cart.svg' %}" alt="">
-                        Agregado al carrito
-                    </button>
-                    {% endif %}
-
                     <div class="author-details">
                         <div class="d-flex align-items-center gap-2">
                             <div class="author-details__thumb flex-shrink-0">
