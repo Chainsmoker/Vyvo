@@ -180,8 +180,8 @@ def create_checkout_session(request):
                     'user_id': request.user.id,
                     'products': str(cart),
                 },
-                success_url='http://localhost:8000/cart/success',
-                cancel_url='http://localhost:8000/cart',
+                success_url='https://vyvo.0day.ltd/cart/success',
+                cancel_url='https://vyvo.0day.ltd/cart',
             )
             if request.user.is_authenticated:
                 return JsonResponse({'url': checkout_session.url})
@@ -220,7 +220,5 @@ def stripe_webhook(request):
         except Exception as e:
             print(e)
             return JsonResponse({'error': str(e)}, status=400)
-
-        request.session['cart'] = [] 
 
     return JsonResponse({'status': 'success'}, status=200)
